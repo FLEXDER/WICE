@@ -114,27 +114,28 @@ p { margin: 0; text-wrap: pretty; }
   gap: 10px;
   height: 100%;
 }
-.logo img { height: 92px; width: auto; }
+.logo img { height: 64px; width: auto; }
 .nav {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
 }
 .nav a {
-  padding: 10px 14px;
+  padding: 10px 12px;
   font-size: 14px;
   font-weight: 600;
   color: var(--ink-soft);
   border-radius: 8px;
   transition: color .15s, background .15s;
   cursor: pointer;
+  white-space: nowrap;
 }
 .nav a:hover, .nav a.active { color: var(--blue); background: var(--sky-soft); }
 .header-cta { display: flex; gap: 10px; align-items: center; }
 
 /* Mobile menu trigger */
 .menu-btn { display: none; }
-@media (max-width: 960px) {
+@media (max-width: 1100px) {
   .nav, .header-cta .desktop-only { display: none; }
   .menu-btn {
     display: inline-flex;
