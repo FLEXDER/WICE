@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WICE MX — Vive tu intercambio cultural en USA</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="assets/logo-color.png" />
+  <style>
+    /* Page-specific responsive */
+    @media (max-width: 960px) {
+      .hero-copy { grid-column: span 12 !important; }
+      .hero-art { grid-column: span 12 !important; max-width: 480px; margin: 32px auto 0; }
+      .stats { grid-template-columns: repeat(2, 1fr) !important; gap: 24px !important; }
+      .about-grid, .visa-grid, .faq-grid, .contact-grid, .prog-desc, .program-hero { grid-template-columns: 1fr !important; gap: 40px !important; }
+      .programs-grid, .team-grid, .testimonials-grid, .process-grid, .prog-cards, .program-meta { grid-template-columns: 1fr !important; }
+    }
+    @media (max-width: 720px) {
+      .programs-grid, .team-grid, .testimonials-grid, .process-grid { grid-template-columns: 1fr !important; }
+      .prog-cards, .program-meta { grid-template-columns: 1fr !important; }
+    }
+    @media (min-width: 720px) and (max-width: 960px) {
+      .programs-grid, .team-grid { grid-template-columns: repeat(2, 1fr) !important; }
+      .testimonials-grid { grid-template-columns: repeat(2, 1fr) !important; }
+      .process-grid { grid-template-columns: repeat(2, 1fr) !important; }
+      .prog-cards { grid-template-columns: 1fr !important; }
+      .program-meta { grid-template-columns: repeat(3, 1fr) !important; }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script type="text/babel" src="components.jsx"></script>
+  <script type="text/babel" src="apply-config.jsx"></script>
+  <script type="text/babel" src="apply-fields.jsx"></script>
+  <script type="text/babel" src="apply-modal.jsx"></script>
+  <script type="text/babel" src="home.jsx"></script>
+  <script type="text/babel" src="program.jsx"></script>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    // Error boundary — prevents blank screen if any component throws
+    class ErrorBoundary extends React.Component {
+      constructor(props) { super(props); this.state = { error: null }; }
+      static getDerivedStateFromError(error) { return { error }; }
+      componentDidCatch(error, info) { console.error('WICE app error:', error, info); }
+      render() {
+        if (this.state.error) {
+          return (
+            <div style={{ padding: 40, fontFamily: 'system-ui, sans-serif', maxWidth: 600, margin: '40px auto' }}>
+              <h2 style={{ color: '#0a2540' }}>Algo salió mal cargando la página</h2>
+              <p style={{ color: '#475569', marginTop: 12 }}>Por favor recarga la página. Si el problema persiste, escríbenos por WhatsApp al +52 33 2213 0778.</p>
+              <button onClick={() => { try { localStorage.removeItem('wice-route'); } catch(e){} location.reload(); }} style={{ marginTop: 16, padding: '10px 18px', background: '#0a2540', color: '#fff', border: 0, borderRadius: 8, cursor: 'pointer' }}>Recargar</button>
+              <pre style={{ marginTop: 24, padding: 12, background: '#f1f5f9', borderRadius: 8, fontSize: 12, overflow: 'auto' }}>{String(this.state.error && this.state.error.message)}</pre>
+            </div>
+          );
+        }
+        return this.props.children;
+      }
+    }
+
+    function App() {
+      const [route, setRoute] = useState('home');
+      const [apply, setApply] = useState({ open: false, program: '', locked: false });
+
+      // Persist route across reloads (defensive: localStorage may be unavailable
+      // in incognito / sandboxed iframes / strict cookie settings)
+      useEffect(() => {
+        try {
+          const saved = localStorage.getItem('wice-route');
+          if (saved) setRoute(saved);
+        } catch (e) { /* no-op */ }
+      }, []);
+      useEffect(() => {
+        try { localStorage.setItem('wice-route', route); } catch (e) { /* no-op */ }
+        try { window.scrollTo({ top: 0, behavior: 'instant' }); } catch (e) { window.scrollTo(0, 0); }
+      }, [route]);
+
+      const navigate = (r) => setRoute(r);
+      const openApply = (program = '', locked = false) => setApply({ open: true, program, locked });
+      const closeApply = () => setApply({ open: false, program: '', locked: false });
+
+      let page;
+      if (route === 'home') page = <Home navigate={navigate} openApply={openApply} />;
+      else if (route === 'programs') page = <ProgramsPage navigate={navigate} openApply={openApply} />;
+      else if (route === 'visa') page = <VisaPage openApply={() => openApply()} />;
+      else if (route === 'process') page = <ProcessPage />;
+      else if (route === 'team') page = <TeamPage />;
+      else if (route === 'testimonials') page = <TestimonialsPage />;
+      else if (route === 'faq') page = <FAQPage />;
+      else if (route === 'contact') page = <ContactPage openApply={() => openApply()} />;
+      else if (route === 'terms') page = <Terms />;
+      else if (route.startsWith('program-')) {
+        const id = route.replace('program-', '');
+        page = <ProgramPage program={id} navigate={navigate} openApply={(pid) => openApply(pid || id, true)} />;
+      } else page = <Home navigate={navigate} openApply={openApply} />;
+
+      return (
+        <>
+          <Header route={route} navigate={navigate} openApply={() => openApply()} />
+          {page}
+          <Footer navigate={navigate} openApply={() => openApply()} />
+          <Fab />
+          <ApplyModal open={apply.open} onClose={closeApply} defaultProgram={apply.locked ? '' : apply.program} initialProgram={apply.locked ? apply.program : ''} />
+        </>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<ErrorBoundary><App /></ErrorBoundary>);
+  </script>
+</body>
+</html>
