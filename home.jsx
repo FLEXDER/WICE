@@ -25,7 +25,7 @@ const Hero = ({ openApply, navigate }) => (
             WICE MX conecta a universitarios, egresados y profesionistas con programas reales de trabajo en Estados Unidos, desde ser instructor de campamento, operador de montaña rusa o hasta chef en un hotel de 5 estrellas y muchos más. Practica inglés, vive la cultura desde adentro y regresa con una experiencia que te marca.
           </p>
           <div style={{ display: 'flex', gap: 12, marginTop: 28, flexWrap: 'wrap' }}>
-            <button className="btn btn-primary btn-lg" onClick={openApply}>Aplicar ahora <Icon name="arrow" size={16} /></button>
+            <button className="btn btn-primary btn-lg" onClick={() => openApply()}>Aplicar ahora <Icon name="arrow" size={16} /></button>
             <button className="btn btn-ghost btn-lg" onClick={() => navigate('programs')}>
               Ver programas
             </button>
@@ -51,7 +51,7 @@ const Hero = ({ openApply, navigate }) => (
               <div style={{ position: 'absolute', top: 24, left: 24, color: 'white', fontFamily: 'Montserrat', fontSize: 11, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.9 }}>SUMMER 2026</div>
             </Placeholder>
           </div>
-          <div style={{ position: 'absolute', bottom: -28, left: -28, background: 'white', padding: 18, borderRadius: 18, boxShadow: 'var(--shadow-lg)', display: 'flex', gap: 14, alignItems: 'center', maxWidth: 260 }}>
+          <div style={{ position: 'absolute', bottom: -24, left: 16, background: 'white', padding: 18, borderRadius: 18, boxShadow: 'var(--shadow-lg)', display: 'flex', gap: 14, alignItems: 'center', maxWidth: 240, zIndex: 2 }}>
             <div style={{ width: 48, height: 48, borderRadius: 12, background: 'var(--yellow)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
               <Icon name="plane" size={22} />
             </div>
@@ -60,7 +60,7 @@ const Hero = ({ openApply, navigate }) => (
               <div style={{ fontSize: 12, color: 'var(--ink-soft)' }}>Sponsor oficial CIEE</div>
             </div>
           </div>
-          <div style={{ position: 'absolute', top: 20, right: -24, background: 'var(--orange)', color: 'white', padding: '12px 18px', borderRadius: 12, fontWeight: 700, fontSize: 13, lineHeight: 1.25, boxShadow: 'var(--shadow)', transform: 'rotate(4deg)' }}>
+          <div style={{ position: 'absolute', top: 20, right: 16, background: 'var(--orange)', color: 'white', padding: '12px 18px', borderRadius: 12, fontWeight: 700, fontSize: 13, lineHeight: 1.25, boxShadow: 'var(--shadow)', transform: 'rotate(4deg)', zIndex: 2 }}>
             Hasta 4 meses<br/>en USA
           </div>
         </div>
@@ -376,7 +376,7 @@ const Contact = ({ openApply, embedded = false }) => (
             Agenda una llamada informativa gratuita, donde te explicaremos los programas, costos y siguientes pasos en 20 minutos.
           </p>
           <div style={{ display: 'flex', gap: 12, marginTop: 28, flexWrap: 'wrap' }}>
-            <button className="btn btn-primary btn-lg" onClick={openApply}>Aplicar ahora</button>
+            <button className="btn btn-primary btn-lg" onClick={() => openApply()}>Aplicar ahora</button>
             <a href="https://wa.me/523322130778" target="_blank" rel="noopener" className="btn btn-white btn-lg">Hablar con asesor</a>
           </div>
         </div>
