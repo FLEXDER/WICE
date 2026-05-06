@@ -106,7 +106,7 @@ const Header = ({ route, navigate, openApply }) => {
     <header className="header">
       <div className="container header-inner">
         <a className="logo" onClick={() => navigate('home')} style={{ cursor: 'pointer' }}>
-          <Logo variant="color" height={88} />
+          <Logo variant="color" height={110} />
         </a>
         <nav className="nav">
           {links.map(l => (
@@ -114,7 +114,7 @@ const Header = ({ route, navigate, openApply }) => {
           ))}
         </nav>
         <div className="header-cta">
-          <button className="btn btn-ghost desktop-only" onClick={() => navigate('contact')}>Hablar con asesor</button>
+          <a href="https://wa.me/523322130778" target="_blank" rel="noopener noreferrer" className="btn btn-ghost desktop-only">Hablar con asesor</a>
           <button className="btn btn-primary" onClick={() => openApply()}>Aplicar ahora <Icon name="arrow" size={16} /></button>
           <button className="menu-btn" onClick={() => setOpen(!open)} aria-label="Menú">
             <Icon name={open ? 'close' : 'menu'} />
