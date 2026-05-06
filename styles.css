@@ -114,7 +114,7 @@ p { margin: 0; text-wrap: pretty; }
   gap: 10px;
   height: 100%;
 }
-.logo img { height: 88px; width: auto; }
+.logo img { height: 100px; width: auto; }
 .nav {
   display: flex;
   align-items: center;
