@@ -157,7 +157,18 @@ const Footer = ({ navigate, openApply }) => (
         </div>
         <div>
           <h4>Empresa</h4>
-          <a href="#" onClick={(e) => { e.preventDefault(); navigate('home'); }}>Qué es WICE</a>
+          <a href="#about" onClick={(e) => {
+            e.preventDefault();
+            navigate('home');
+            setTimeout(() => {
+              const el = document.getElementById('about');
+              if (el) {
+                const headerH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 116;
+                const top = el.getBoundingClientRect().top + window.scrollY - headerH - 16;
+                window.scrollTo({ top, behavior: 'smooth' });
+              }
+            }, 100);
+          }}>Qué es WICE</a>
           <a href="#" onClick={(e) => { e.preventDefault(); navigate('team'); }}>Equipo</a>
           <a href="#" onClick={(e) => { e.preventDefault(); navigate('faq'); }}>Preguntas frecuentes</a>
           <a href="#" onClick={(e) => { e.preventDefault(); navigate('terms'); }}>Términos y condiciones</a>
