@@ -7,6 +7,10 @@
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="assets/logo-color.png" />
   <style>
+    /* Critical inline CSS — applied immediately to prevent FOUC on logo */
+    .logo img { height: 115px; width: auto; display: block; }
+    .header { height: 130px; }
+
     /* Page-specific responsive */
     @media (max-width: 1080px) {
       .employers-grid { grid-template-columns: repeat(3, 1fr) !important; }
