@@ -23,7 +23,7 @@
   --shadow: 0 12px 32px -12px rgba(15, 69, 97, 0.18);
   --shadow-lg: 0 30px 60px -20px rgba(15, 69, 97, 0.28);
   --container: 1200px;
-  --header-h: 140px;
+  --header-h: 130px;
 }
 
 * { box-sizing: border-box; }
@@ -114,7 +114,7 @@ p { margin: 0; text-wrap: pretty; }
   gap: 10px;
   height: 100%;
 }
-.logo img { height: 120px; width: auto; }
+.logo img { height: 115px; width: auto; }
 .nav {
   display: flex;
   align-items: center;
