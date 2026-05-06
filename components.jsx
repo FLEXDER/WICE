@@ -84,6 +84,7 @@ const Header = ({ route, navigate, openApply }) => {
   const links = [
     { id: 'home', label: 'Inicio' },
     { id: 'programs', label: 'Programas' },
+    { id: 'employers', label: 'Empleadores' },
     { id: 'visa', label: 'Visa J1' },
     { id: 'process', label: 'Proceso' },
     { id: 'team', label: 'Equipo' },
