@@ -1,8 +1,14 @@
 // New ApplyModal — multi-step, in-page, no redirects. Posts to Jotform via fetch.
 const ApplyModal = ({ open, onClose, defaultProgram = '', initialProgram = '' }) => {
-  const lockedProgram = initialProgram || '';
-  const [program, setProgram] = React.useState(lockedProgram || defaultProgram);
-  const [step, setStep] = React.useState(lockedProgram ? 'form' : (defaultProgram ? 'form' : 'select'));
+  // Defensive: only accept valid program keys (must exist in JOTFORM_CONFIG).
+  // This prevents bugs where a click event or other invalid value gets passed
+  // as a "program", which would silently break the form rendering.
+  const isValidProgram = (p) => typeof p === 'string' && p && window.JOTFORM_CONFIG && window.JOTFORM_CONFIG[p];
+  const safeLocked = isValidProgram(initialProgram) ? initialProgram : '';
+  const safeDefault = isValidProgram(defaultProgram) ? defaultProgram : '';
+  const lockedProgram = safeLocked;
+  const [program, setProgram] = React.useState(safeLocked || safeDefault);
+  const [step, setStep] = React.useState((safeLocked || safeDefault) ? 'form' : 'select');
   const [status, setStatus] = React.useState('idle'); // idle | loading | success | error
   const [errors, setErrors] = React.useState({});
 
@@ -26,13 +32,15 @@ const ApplyModal = ({ open, onClose, defaultProgram = '', initialProgram = '' })
 
   React.useEffect(() => {
     if (!open) return;
-    const p = lockedProgram || defaultProgram || '';
+    const safeLocked2 = isValidProgram(initialProgram) ? initialProgram : '';
+    const safeDefault2 = isValidProgram(defaultProgram) ? defaultProgram : '';
+    const p = safeLocked2 || safeDefault2 || '';
     setProgram(p);
     setStep(p ? 'form' : 'select');
     setStatus('idle');
     setErrors({});
     setForm(blank);
-  }, [open, lockedProgram, defaultProgram]);
+  }, [open, initialProgram, defaultProgram]);
 
   if (!open) return null;
 
