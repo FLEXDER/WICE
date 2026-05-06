@@ -585,6 +585,106 @@ const Terms = () => (
   </main>
 );
 
+const EMPLOYERS = {
+  swt: {
+    name: 'Summer Work & Travel',
+    color: 'var(--yellow)',
+    textColor: 'var(--ink)',
+    icon: 'sun',
+    tone: 'yellow',
+    employers: [
+      { name: 'Cedar Point', location: 'Ohio', type: 'Parque de diversiones' },
+      { name: 'Yellowstone', location: 'Wyoming', type: 'Parque nacional' },
+      { name: "Morey's Piers", location: 'New Jersey', type: 'Parque de diversiones' },
+      { name: 'Empleador 4', location: 'Estado', type: 'Tipo' },
+      { name: 'Empleador 5', location: 'Estado', type: 'Tipo' },
+    ],
+  },
+  camp: {
+    name: 'Camp Exchange',
+    color: 'var(--green)',
+    textColor: 'white',
+    icon: 'tent',
+    tone: 'green',
+    employers: [
+      { name: 'Empleador 1', location: 'Estado', type: 'Campamento' },
+      { name: 'Empleador 2', location: 'Estado', type: 'Campamento' },
+      { name: 'Empleador 3', location: 'Estado', type: 'Campamento' },
+      { name: 'Empleador 4', location: 'Estado', type: 'Campamento' },
+      { name: 'Empleador 5', location: 'Estado', type: 'Campamento' },
+    ],
+  },
+  intern: {
+    name: 'Internship & Trainee',
+    color: 'var(--blue)',
+    textColor: 'white',
+    icon: 'briefcase',
+    tone: 'sky',
+    employers: [
+      { name: 'Empleador 1', location: 'Estado', type: 'Empresa' },
+      { name: 'Empleador 2', location: 'Estado', type: 'Empresa' },
+      { name: 'Empleador 3', location: 'Estado', type: 'Empresa' },
+      { name: 'Empleador 4', location: 'Estado', type: 'Empresa' },
+      { name: 'Empleador 5', location: 'Estado', type: 'Empresa' },
+    ],
+  },
+  support: {
+    name: 'Support Staff',
+    color: 'var(--orange-soft)',
+    textColor: 'white',
+    icon: 'chef',
+    tone: 'orange',
+    employers: [
+      { name: 'Empleador 1', location: 'Estado', type: 'Campamento' },
+      { name: 'Empleador 2', location: 'Estado', type: 'Campamento' },
+      { name: 'Empleador 3', location: 'Estado', type: 'Campamento' },
+      { name: 'Empleador 4', location: 'Estado', type: 'Campamento' },
+      { name: 'Empleador 5', location: 'Estado', type: 'Campamento' },
+    ],
+  },
+};
+
+const Employers = ({ embedded = false }) => (
+  <section style={{ paddingTop: embedded ? 96 : 'calc(var(--header-h) + 96px)' }}>
+    <div className="container">
+      <div className="section-head">
+        <span className="eyebrow">Empleadores</span>
+        <h2>Empresas y campamentos <span className="text-blue">donde nuestros aplicantes trabajan en USA.</span></h2>
+        <p className="lead">Algunos de los empleadores con los que hemos colaborado a lo largo de los años, organizados por programa.</p>
+      </div>
+
+      {Object.entries(EMPLOYERS).map(([key, prog]) => (
+        <div key={key} style={{ marginBottom: 80 }}>
+          {/* Program header */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 18, marginBottom: 32, paddingBottom: 20, borderBottom: '1px solid var(--line)' }}>
+            <div style={{ width: 60, height: 60, borderRadius: 16, background: prog.color, color: prog.textColor, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <Icon name={prog.icon} size={28} />
+            </div>
+            <div>
+              <span className="eyebrow">Programa</span>
+              <h3 style={{ marginTop: 4, fontSize: 26 }}>{prog.name}</h3>
+            </div>
+          </div>
+
+          {/* Grid of 5 employers */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 18 }} className="employers-grid">
+            {prog.employers.map((e, i) => (
+              <div key={i} className="card" style={{ overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+                <Placeholder label="Foto" tone={prog.tone} ratio="1/1" style={{ borderRadius: 0 }} />
+                <div style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 4 }}>
+                  <h4 style={{ fontSize: 15, lineHeight: 1.25 }}>{e.name}</h4>
+                  <div style={{ fontSize: 13, color: 'var(--ink-soft)', fontWeight: 600 }}>{e.location}</div>
+                  <div style={{ fontSize: 12, color: 'var(--blue)', fontWeight: 700, marginTop: 4, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{e.type}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+);
+
 // Home: Hero + About + HasEmployer
 const Home = ({ navigate, openApply }) => (
   <main data-screen-label="Home">
@@ -596,6 +696,7 @@ const Home = ({ navigate, openApply }) => (
 
 // Standalone wrappers for tabs
 const ProgramsPage = (props) => <main data-screen-label="Programas"><Programs {...props} /></main>;
+const EmployersPage = (props) => <main data-screen-label="Empleadores"><Employers {...props} /></main>;
 const VisaPage = (props) => <main data-screen-label="Visa J1"><Visa {...props} /></main>;
 const ProcessPage = (props) => <main data-screen-label="Proceso"><Process {...props} /></main>;
 const TeamPage = (props) => <main data-screen-label="Equipo"><Team {...props} /></main>;
@@ -603,4 +704,4 @@ const TestimonialsPage = (props) => <main data-screen-label="Testimonios"><Testi
 const FAQPage = (props) => <main data-screen-label="FAQ"><FAQ {...props} /></main>;
 const ContactPage = (props) => <main data-screen-label="Contacto"><Contact {...props} /></main>;
 
-Object.assign(window, { Home, PROGRAMS, ProgramsPage, VisaPage, ProcessPage, TeamPage, TestimonialsPage, FAQPage, ContactPage });
+Object.assign(window, { Home, PROGRAMS, EMPLOYERS, ProgramsPage, EmployersPage, VisaPage, ProcessPage, TeamPage, TestimonialsPage, FAQPage, ContactPage });
