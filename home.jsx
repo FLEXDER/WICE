@@ -650,7 +650,7 @@ const Employers = ({ embedded = false }) => (
       <div className="section-head">
         <span className="eyebrow">Empleadores</span>
         <h2>Empresas y campamentos <span className="text-blue">donde nuestros aplicantes trabajan en USA.</span></h2>
-        <p className="lead">Algunos de los empleadores con los que hemos colaborado a lo largo de los años, organizados por programa.</p>
+        <p className="lead">Éstos son algunos de los empleadores campamentos y empresas con las que puedes trabajar.</p>
       </div>
 
       {Object.entries(EMPLOYERS).map(([key, prog]) => (
