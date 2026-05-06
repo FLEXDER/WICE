@@ -139,7 +139,7 @@ const Footer = ({ navigate, openApply }) => (
     <div className="container">
       <div className="footer-grid">
         <div>
-          <Logo variant="light" height={56} />
+          <Logo variant="light" height={110} />
           <p style={{ marginTop: 18, maxWidth: 360, color: 'rgba(255,255,255,0.6)', fontSize: 14, lineHeight: 1.6 }}>
             Inspiramos intercambios culturales entre México y Estados Unidos desde hace 11 años. Representante de CIEE y parte del programa Bridge USA.
           </p>
