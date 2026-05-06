@@ -1,5 +1,4 @@
 /* WICE MX - Design tokens & global styles */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
 
 :root {
   --blue: #196084;
@@ -23,7 +22,7 @@
   --shadow: 0 12px 32px -12px rgba(15, 69, 97, 0.18);
   --shadow-lg: 0 30px 60px -20px rgba(15, 69, 97, 0.28);
   --container: 1200px;
-  --header-h: 130px;
+  --header-h: 116px;
 }
 
 * { box-sizing: border-box; }
@@ -95,7 +94,9 @@ p { margin: 0; text-wrap: pretty; }
   position: fixed;
   top: 0; left: 0; right: 0;
   height: var(--header-h);
-  background: #ffffff;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: saturate(180%) blur(12px);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
   border-bottom: 1px solid rgba(25, 96, 132, 0.08);
   z-index: 80;
 }
@@ -112,7 +113,7 @@ p { margin: 0; text-wrap: pretty; }
   gap: 10px;
   height: 100%;
 }
-.logo img { height: 115px; width: auto; }
+.logo img { height: 92px; width: auto; }
 .nav {
   display: flex;
   align-items: center;
