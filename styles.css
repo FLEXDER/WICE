@@ -95,9 +95,7 @@ p { margin: 0; text-wrap: pretty; }
   position: fixed;
   top: 0; left: 0; right: 0;
   height: var(--header-h);
-  background: rgba(255,255,255,0.92);
-  backdrop-filter: saturate(180%) blur(12px);
-  -webkit-backdrop-filter: saturate(180%) blur(12px);
+  background: #ffffff;
   border-bottom: 1px solid rgba(25, 96, 132, 0.08);
   z-index: 80;
 }
