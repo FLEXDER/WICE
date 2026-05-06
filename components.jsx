@@ -7,7 +7,9 @@ const Logo = ({ variant = 'color', height = 52 }) => {
     light: 'assets/logo-light.png',
     blue: 'assets/logo-blue.png',
   }[variant];
-  return <img src={src} alt="WICE MX" style={{ height, width: 'auto' }} />;
+  // Pre-compute width based on logo aspect ratio (800x760 source) to prevent FOUC
+  const width = Math.round(height * (800 / 760));
+  return <img src={src} alt="WICE MX" width={width} height={height} style={{ height, width: 'auto', display: 'block' }} />;
 };
 
 const Icon = ({ name, size = 20, stroke = 2 }) => {
