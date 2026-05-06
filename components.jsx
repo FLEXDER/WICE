@@ -7,8 +7,8 @@ const Logo = ({ variant = 'color', height = 52 }) => {
     light: 'assets/logo-light.png',
     blue: 'assets/logo-blue.png',
   }[variant];
-  // Pre-compute width based on logo aspect ratio (800x760 source) to prevent FOUC
-  const width = Math.round(height * (800 / 760));
+  // Pre-compute width based on logo aspect ratio (750x800 source) to prevent FOUC
+  const width = Math.round(height * (750 / 800));
   return <img src={src} alt="WICE MX" width={width} height={height} style={{ height, width: 'auto', display: 'block' }} />;
 };
 
@@ -106,7 +106,7 @@ const Header = ({ route, navigate, openApply }) => {
     <header className="header">
       <div className="container header-inner">
         <a className="logo" onClick={() => navigate('home')} style={{ cursor: 'pointer' }}>
-          <Logo variant="color" height={115} />
+          <Logo variant="color" height={88} />
         </a>
         <nav className="nav">
           {links.map(l => (
