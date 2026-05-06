@@ -136,7 +136,7 @@ const ProgramPage = ({ program, openApply, navigate }) => {
               <h1 style={{ marginTop: 18 }}>{p.name}</h1>
               <p style={{ fontSize: 22, marginTop: 16, fontWeight: 600, opacity: 0.9 }}>{p.tagline}</p>
               <div style={{ display: 'flex', gap: 12, marginTop: 28, flexWrap: 'wrap' }}>
-                <button className="btn btn-lg" onClick={() => openApply(p.id)} style={{ background: 'white', color: 'var(--blue-deep)', boxShadow: '0 8px 20px -6px rgba(0,0,0,0.25)' }}>Aplicar a este programa <Icon name="arrow" size={16} /></button>
+                <button className="btn btn-white btn-lg" onClick={() => openApply(p.id)} style={{ boxShadow: '0 8px 20px -6px rgba(0,0,0,0.25)' }}>Aplicar a este programa <Icon name="arrow" size={16} /></button>
                 <a href="https://wa.me/523322130778" target="_blank" rel="noopener" className="btn btn-lg" style={{ background: 'transparent', color: p.accent, border: `1.5px solid ${p.accent === 'white' ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.25)'}` }}>Hablar con asesor</a>
               </div>
             </div>
