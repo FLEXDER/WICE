@@ -113,10 +113,18 @@ const About = ({ embedded = false }) => (
         </div>
         <div style={{ position: 'relative' }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-            <img src="assets/about/about-1.webp" alt="" style={{ aspectRatio: '3/4', width: '100%', objectFit: 'cover', borderRadius: 'var(--radius)' }} />
-            <img src="assets/about/about-2.webp" alt="" style={{ aspectRatio: '3/4', width: '100%', objectFit: 'cover', borderRadius: 'var(--radius)', marginTop: 32 }} />
-            <img src="assets/about/about-3.webp" alt="" style={{ aspectRatio: '3/4', width: '100%', objectFit: 'cover', borderRadius: 'var(--radius)', marginTop: -16 }} />
-            <img src="assets/about/about-4.webp" alt="" style={{ aspectRatio: '3/4', width: '100%', objectFit: 'cover', borderRadius: 'var(--radius)', marginTop: 16 }} />
+            <div style={{ aspectRatio: '3/4', borderRadius: 'var(--radius)', overflow: 'hidden' }}>
+              <img src="assets/about/about-1.webp" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            </div>
+            <div style={{ aspectRatio: '3/4', borderRadius: 'var(--radius)', overflow: 'hidden', marginTop: 32 }}>
+              <img src="assets/about/about-2.webp" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            </div>
+            <div style={{ aspectRatio: '3/4', borderRadius: 'var(--radius)', overflow: 'hidden', marginTop: -16 }}>
+              <img src="assets/about/about-3.webp" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            </div>
+            <div style={{ aspectRatio: '3/4', borderRadius: 'var(--radius)', overflow: 'hidden', marginTop: 16 }}>
+              <img src="assets/about/about-4.webp" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            </div>
           </div>
         </div>
       </div>
