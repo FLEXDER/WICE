@@ -113,10 +113,10 @@ const About = ({ embedded = false }) => (
         </div>
         <div style={{ position: 'relative' }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-            <Placeholder label="Aeropuerto MEX→US" tone="sky" ratio="3/4" />
-            <Placeholder label="Bandera USA" tone="orange" ratio="3/4" style={{ marginTop: 32 }} />
-            <Placeholder label="Estudiantes" tone="yellow" ratio="3/4" style={{ marginTop: -16 }} />
-            <Placeholder label="Visa stamp" tone="green" ratio="3/4" style={{ marginTop: 16 }} />
+            <img src="assets/about/about-1.webp" alt="" style={{ aspectRatio: '3/4', width: '100%', objectFit: 'cover', borderRadius: 'var(--radius)' }} />
+            <img src="assets/about/about-2.webp" alt="" style={{ aspectRatio: '3/4', width: '100%', objectFit: 'cover', borderRadius: 'var(--radius)', marginTop: 32 }} />
+            <img src="assets/about/about-3.webp" alt="" style={{ aspectRatio: '3/4', width: '100%', objectFit: 'cover', borderRadius: 'var(--radius)', marginTop: -16 }} />
+            <img src="assets/about/about-4.webp" alt="" style={{ aspectRatio: '3/4', width: '100%', objectFit: 'cover', borderRadius: 'var(--radius)', marginTop: 16 }} />
           </div>
         </div>
       </div>
