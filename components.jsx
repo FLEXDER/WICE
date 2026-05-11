@@ -379,4 +379,67 @@ const Field = ({ label, type = 'text', required, value, onChange, placeholder })
   </div>
 );
 
-Object.assign(window, { Logo, Icon, Placeholder, Header, Footer, Fab });
+// Hero Carousel — auto-rotating images with fade transition
+const HeroCarousel = ({ images = [], interval = 5000 }) => {
+  const [active, setActive] = React.useState(0);
+  React.useEffect(() => {
+    if (images.length <= 1) return;
+    const id = setInterval(() => {
+      setActive((prev) => (prev + 1) % images.length);
+    }, interval);
+    return () => clearInterval(id);
+  }, [images.length, interval]);
+
+  if (!images.length) {
+    return (
+      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, #B0EFFA 0%, #7fc7e0 100%)' }} />
+    );
+  }
+
+  return (
+    <div style={{ position: 'absolute', inset: 0, overflow: 'hidden' }}>
+      {images.map((src, i) => (
+        <img
+          key={src}
+          src={src}
+          alt=""
+          style={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            opacity: active === i ? 1 : 0,
+            transition: 'opacity 1.2s ease-in-out',
+          }}
+        />
+      ))}
+      {/* Subtle dark overlay for badge contrast */}
+      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.18) 100%)' }} />
+      {/* Dots indicator */}
+      {images.length > 1 && (
+        <div style={{ position: 'absolute', bottom: 16, left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: 8, zIndex: 3 }}>
+          {images.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setActive(i)}
+              aria-label={`Slide ${i + 1}`}
+              style={{
+                width: active === i ? 24 : 8,
+                height: 8,
+                borderRadius: 999,
+                background: active === i ? 'white' : 'rgba(255,255,255,0.5)',
+                border: 'none',
+                cursor: 'pointer',
+                transition: 'width .25s ease, background .2s',
+                padding: 0,
+              }}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+Object.assign(window, { Logo, Icon, Placeholder, Header, Footer, Fab, HeroCarousel });
