@@ -133,10 +133,10 @@ const About = ({ embedded = false }) => (
 );
 
 const PROGRAMS = [
-  { id: 'swt', route: 'program-swt', name: 'Summer Work & Travel', tag: 'Universitarios · verano', duration: '10–16 semanas', cost: '$1,900 USD', color: 'var(--yellow)', textColor: 'var(--ink)', icon: 'sun', desc: 'Trabaja legalmente en USA durante tus vacaciones de verano, conoce gente del mundo y viaja al final de tu programa.' },
-  { id: 'camp', route: 'program-camp', name: 'Camp Exchange', tag: 'Counselor · staff', duration: 'Mín. 8 semanas', cost: '$550 USD', color: 'var(--green)', textColor: 'white', icon: 'tent', desc: 'Trabaja en campamentos de verano con niños y adolescentes. Liderazgo, comunidad y naturaleza al aire libre.' },
-  { id: 'intern', route: 'program-intern', name: 'Internship & Trainee', tag: 'Profesional · carrera', duration: '3–18 meses', cost: '', color: 'var(--blue)', textColor: 'white', icon: 'briefcase', desc: 'Realiza tus prácticas profesionales en empresas reales de Estados Unidos en tu área de estudio.' },
-  { id: 'support', route: 'program-support', name: 'Support Staff', tag: 'Operativo · campamentos', duration: 'Mín. 8 semanas', cost: '$550 USD', color: 'var(--orange-soft)', textColor: 'white', icon: 'chef', desc: 'Trabaja en cocina, mantenimiento o limpieza en campamentos. Conoce personas de todo el mundo.' },
+  { id: 'swt', route: 'program-swt', name: 'Summer Work & Travel', tag: 'Universitarios · verano', duration: '10–16 semanas', cost: '$1,900 USD', color: 'var(--yellow)', textColor: 'var(--ink)', icon: 'sun', bgImage: 'assets/programs/program-swt.webp', desc: 'Trabaja legalmente en USA durante tus vacaciones de verano, conoce gente del mundo y viaja al final de tu programa.' },
+  { id: 'camp', route: 'program-camp', name: 'Camp Exchange', tag: 'Counselor · staff', duration: 'Mín. 8 semanas', cost: '$550 USD', color: 'var(--green)', textColor: 'white', icon: 'tent', bgImage: 'assets/programs/program-camp.webp', desc: 'Trabaja en campamentos de verano con niños y adolescentes. Liderazgo, comunidad y naturaleza al aire libre.' },
+  { id: 'intern', route: 'program-intern', name: 'Internship & Trainee', tag: 'Profesional · carrera', duration: '3–18 meses', cost: '', color: 'var(--blue)', textColor: 'white', icon: 'briefcase', bgImage: 'assets/programs/program-intern.webp', desc: 'Realiza tus prácticas profesionales en empresas reales de Estados Unidos en tu área de estudio.' },
+  { id: 'support', route: 'program-support', name: 'Support Staff', tag: 'Operativo · campamentos', duration: 'Mín. 8 semanas', cost: '$550 USD', color: 'var(--orange-soft)', textColor: 'white', icon: 'chef', bgImage: 'assets/programs/program-support.webp', desc: 'Trabaja en cocina, mantenimiento o limpieza en campamentos. Conoce personas de todo el mundo.' },
 ];
 
 const Programs = ({ navigate, openApply, embedded = false }) => (
@@ -150,12 +150,13 @@ const Programs = ({ navigate, openApply, embedded = false }) => (
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 20 }} className="programs-grid">
         {PROGRAMS.map((p) => (
           <div key={p.id} className="card" style={{ overflow: 'hidden', display: 'flex', flexDirection: 'column', height: '100%' }}>
-            <div style={{ background: p.color, color: p.textColor, padding: '24px 22px', position: 'relative', height: 200, display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
-              <div style={{ width: 44, height: 44, borderRadius: 12, background: 'rgba(255,255,255,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 14 }}>
+            <div style={{ backgroundImage: `url(${p.bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center', color: p.textColor, padding: '24px 22px', position: 'relative', height: 200, display: 'flex', flexDirection: 'column', flexShrink: 0, overflow: 'hidden' }}>
+              <div style={{ position: 'absolute', inset: 0, background: p.color, opacity: 0.62, zIndex: 0 }} />
+              <div style={{ width: 44, height: 44, borderRadius: 12, background: 'rgba(255,255,255,0.25)', backdropFilter: 'blur(4px)', WebkitBackdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 14, position: 'relative', zIndex: 1 }}>
                 <Icon name={p.icon} size={22} />
               </div>
-              <div style={{ fontSize: 11, letterSpacing: '0.12em', fontWeight: 700, textTransform: 'uppercase', opacity: 0.85 }}>{p.tag}</div>
-              <h3 style={{ marginTop: 4, fontSize: 22, lineHeight: 1.15 }}>{p.name}</h3>
+              <div style={{ fontSize: 11, letterSpacing: '0.12em', fontWeight: 700, textTransform: 'uppercase', opacity: 0.95, position: 'relative', zIndex: 1, textShadow: '0 1px 2px rgba(0,0,0,0.15)' }}>{p.tag}</div>
+              <h3 style={{ marginTop: 4, fontSize: 22, lineHeight: 1.15, position: 'relative', zIndex: 1, textShadow: '0 1px 3px rgba(0,0,0,0.2)' }}>{p.name}</h3>
             </div>
             <div style={{ padding: 22, display: 'flex', flexDirection: 'column', gap: 14, flex: 1, background: 'white' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
