@@ -151,12 +151,13 @@ const Programs = ({ navigate, openApply, embedded = false }) => (
         {PROGRAMS.map((p) => (
           <div key={p.id} className="card" style={{ overflow: 'hidden', display: 'flex', flexDirection: 'column', height: '100%' }}>
             <div style={{ backgroundImage: `url(${p.bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center', color: p.textColor, padding: '24px 22px', position: 'relative', height: 200, display: 'flex', flexDirection: 'column', flexShrink: 0, overflow: 'hidden' }}>
-              <div style={{ position: 'absolute', inset: 0, background: p.color, opacity: 0.62, zIndex: 0 }} />
-              <div style={{ width: 44, height: 44, borderRadius: 12, background: 'rgba(255,255,255,0.25)', backdropFilter: 'blur(4px)', WebkitBackdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 14, position: 'relative', zIndex: 1 }}>
+              <div style={{ position: 'absolute', inset: 0, background: p.color, opacity: 0.15, zIndex: 0 }} />
+              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0) 30%, rgba(0,0,0,0.35) 100%)', zIndex: 0 }} />
+              <div style={{ width: 44, height: 44, borderRadius: 12, background: 'rgba(255,255,255,0.35)', backdropFilter: 'blur(6px)', WebkitBackdropFilter: 'blur(6px)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 14, position: 'relative', zIndex: 1 }}>
                 <Icon name={p.icon} size={22} />
               </div>
-              <div style={{ fontSize: 11, letterSpacing: '0.12em', fontWeight: 700, textTransform: 'uppercase', opacity: 0.95, position: 'relative', zIndex: 1, textShadow: '0 1px 2px rgba(0,0,0,0.15)' }}>{p.tag}</div>
-              <h3 style={{ marginTop: 4, fontSize: 22, lineHeight: 1.15, position: 'relative', zIndex: 1, textShadow: '0 1px 3px rgba(0,0,0,0.2)' }}>{p.name}</h3>
+              <div style={{ fontSize: 11, letterSpacing: '0.12em', fontWeight: 700, textTransform: 'uppercase', opacity: 0.95, position: 'relative', zIndex: 1, color: 'white', textShadow: '0 1px 3px rgba(0,0,0,0.5), 0 0 8px rgba(0,0,0,0.3)' }}>{p.tag}</div>
+              <h3 style={{ marginTop: 4, fontSize: 22, lineHeight: 1.15, position: 'relative', zIndex: 1, color: 'white', textShadow: '0 2px 6px rgba(0,0,0,0.6), 0 0 12px rgba(0,0,0,0.3)' }}>{p.name}</h3>
             </div>
             <div style={{ padding: 22, display: 'flex', flexDirection: 'column', gap: 14, flex: 1, background: 'white' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
