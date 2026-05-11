@@ -47,9 +47,17 @@ const Hero = ({ openApply, navigate }) => (
 
         <div style={{ gridColumn: 'span 5', position: 'relative' }} className="hero-art">
           <div style={{ position: 'relative', borderRadius: 'var(--radius-lg)', overflow: 'hidden', aspectRatio: '4/5', background: 'linear-gradient(180deg, #B0EFFA 0%, #7fc7e0 100%)' }}>
-            <Placeholder label="" ratio="4/5" tone="blue" style={{ borderRadius: 0, height: '100%' }}>
-              <div style={{ position: 'absolute', top: 24, left: 24, color: 'white', fontFamily: 'Montserrat', fontSize: 11, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.9 }}>SUMMER 2026</div>
-            </Placeholder>
+            <HeroCarousel
+              images={[
+                'assets/hero/hero-1.webp',
+                'assets/hero/hero-2.webp',
+                'assets/hero/hero-3.webp',
+                'assets/hero/hero-4.webp',
+                'assets/hero/hero-5.webp',
+              ]}
+              interval={5000}
+            />
+            <div style={{ position: 'absolute', top: 24, left: 24, color: 'white', fontFamily: 'Montserrat', fontSize: 11, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.95, textShadow: '0 1px 3px rgba(0,0,0,0.3)', zIndex: 2 }}>SUMMER 2026</div>
           </div>
           <div style={{ position: 'absolute', bottom: -24, left: 16, background: 'white', padding: 18, borderRadius: 18, boxShadow: 'var(--shadow-lg)', display: 'flex', gap: 14, alignItems: 'center', maxWidth: 240, zIndex: 2 }}>
             <div style={{ width: 48, height: 48, borderRadius: 12, background: 'var(--yellow)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
