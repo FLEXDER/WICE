@@ -141,7 +141,9 @@ const ProgramPage = ({ program, openApply, navigate }) => {
               </div>
             </div>
             <div>
-              <Placeholder label={`Foto · ${p.name}`} tone={tones[p.id]} ratio="4/5" />
+              <div style={{ aspectRatio: '4/5', borderRadius: 'var(--radius-lg)', overflow: 'hidden', boxShadow: '0 20px 50px -10px rgba(0,0,0,0.3)' }}>
+                <img src={`assets/programs/program-${p.id}.webp`} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+              </div>
             </div>
           </div>
           <div style={{ marginTop: 56, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }} className="program-meta">
