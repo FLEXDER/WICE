@@ -33,7 +33,9 @@ const Hero = ({ openApply, navigate }) => (
           <div style={{ display: 'flex', gap: 14, marginTop: 36, alignItems: 'center', flexWrap: 'wrap' }}>
             <div style={{ display: 'flex' }}>
               {['#FFD731', '#639917', '#FF6100', '#196084'].map((c, i) => (
-                <div key={i} style={{ width: 36, height: 36, borderRadius: 999, background: c, border: '3px solid white', marginLeft: i ? -10 : 0 }} />
+                <div key={i} style={{ width: 36, height: 36, borderRadius: 999, background: c, border: '3px solid white', marginLeft: i ? -10 : 0, overflow: 'hidden', boxShadow: '0 2px 6px rgba(0,0,0,0.12)' }}>
+                  <img src={`assets/avatars/avatar-${i + 1}.webp`} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                </div>
               ))}
             </div>
             <div>
