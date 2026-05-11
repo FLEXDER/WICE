@@ -115,17 +115,17 @@ const About = ({ embedded = false }) => (
         </div>
         <div style={{ position: 'relative' }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-            <div style={{ aspectRatio: '3/4', borderRadius: 'var(--radius)', overflow: 'hidden' }}>
-              <img src="assets/about/about-1.webp" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            <div className="about-photo" style={{ aspectRatio: '3/4', borderRadius: 'var(--radius)', overflow: 'hidden' }}>
+              <img src="assets/about/about-1.webp" alt="" className="about-photo-img" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
             </div>
-            <div style={{ aspectRatio: '3/4', borderRadius: 'var(--radius)', overflow: 'hidden', marginTop: 32 }}>
-              <img src="assets/about/about-2.webp" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            <div className="about-photo" style={{ aspectRatio: '3/4', borderRadius: 'var(--radius)', overflow: 'hidden', marginTop: 32 }}>
+              <img src="assets/about/about-2.webp" alt="" className="about-photo-img" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
             </div>
-            <div style={{ aspectRatio: '3/4', borderRadius: 'var(--radius)', overflow: 'hidden', marginTop: -16 }}>
-              <img src="assets/about/about-3.webp" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            <div className="about-photo" style={{ aspectRatio: '3/4', borderRadius: 'var(--radius)', overflow: 'hidden', marginTop: -16 }}>
+              <img src="assets/about/about-3.webp" alt="" className="about-photo-img" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
             </div>
-            <div style={{ aspectRatio: '3/4', borderRadius: 'var(--radius)', overflow: 'hidden', marginTop: 16 }}>
-              <img src="assets/about/about-4.webp" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            <div className="about-photo" style={{ aspectRatio: '3/4', borderRadius: 'var(--radius)', overflow: 'hidden', marginTop: 16 }}>
+              <img src="assets/about/about-4.webp" alt="" className="about-photo-img" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
             </div>
           </div>
         </div>
