@@ -3,7 +3,7 @@
 const Stat = ({ num, label, suffix = '', prefix = '' }) => (
   <div>
     <div style={{ fontSize: 'clamp(40px, 5vw, 64px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1, color: 'var(--blue)' }}>
-      <span style={{ color: 'var(--orange)' }}>{prefix}</span>{num}<span style={{ color: 'var(--orange)' }}>{suffix}</span>
+      <span style={{ color: '#52d2f8' }}>{prefix}</span>{num}<span style={{ color: '#52d2f8' }}>{suffix}</span>
     </div>
     <div style={{ marginTop: 8, fontSize: 13, color: 'var(--ink-soft)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em' }}>{label}</div>
   </div>
@@ -18,7 +18,7 @@ const Hero = ({ openApply, navigate }) => (
             <span style={{ width: 6, height: 6, borderRadius: 999, background: 'var(--green)' }} /> Aplicaciones abiertas verano 2026
           </span>
           <h1 style={{ marginTop: 18 }}>
-            <span style={{ color: 'var(--orange)' }}>Trabaja, viaja,</span><br/>
+            <span style={{ color: '#52d2f8' }}>Trabaja, viaja,</span><br/>
             <span style={{ color: 'var(--blue)' }}>vuelve diferente.</span>
           </h1>
           <p className="lead" style={{ marginTop: 22, maxWidth: 580 }}>
