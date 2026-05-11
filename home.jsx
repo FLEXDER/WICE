@@ -38,12 +38,7 @@ const Hero = ({ openApply, navigate }) => (
                 </div>
               ))}
             </div>
-            <div>
-              <div style={{ display: 'flex', gap: 2, color: 'var(--yellow)' }}>
-                {Array.from({ length: 5 }).map((_, i) => <Icon key={i} name="star" size={14} stroke={0} />)}
-              </div>
-              <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink-soft)' }}>+2,225 aplicantes desde 2015</div>
-            </div>
+            <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink-soft)' }}>+2,225 aplicantes desde 2015</div>
           </div>
         </div>
 
