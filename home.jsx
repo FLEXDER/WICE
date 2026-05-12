@@ -608,11 +608,11 @@ const EMPLOYERS = {
     icon: 'sun',
     tone: 'yellow',
     employers: [
-      { name: 'Cedar Point', location: 'Ohio', type: 'Parque de diversiones' },
-      { name: 'Yellowstone', location: 'Wyoming', type: 'Parque nacional' },
-      { name: "Morey's Piers", location: 'New Jersey', type: 'Parque de diversiones' },
-      { name: 'Empleador 4', location: 'Estado', type: 'Tipo' },
-      { name: 'Empleador 5', location: 'Estado', type: 'Tipo' },
+      'Parques nacionales',
+      'Parques de diversiones',
+      'Parque acuático',
+      'Hoteles',
+      'Restaurantes',
     ],
   },
   camp: {
@@ -622,11 +622,11 @@ const EMPLOYERS = {
     icon: 'tent',
     tone: 'green',
     employers: [
-      { name: 'Empleador 1', location: 'Estado', type: 'Campamento' },
-      { name: 'Empleador 2', location: 'Estado', type: 'Campamento' },
-      { name: 'Empleador 3', location: 'Estado', type: 'Campamento' },
-      { name: 'Empleador 4', location: 'Estado', type: 'Campamento' },
-      { name: 'Empleador 5', location: 'Estado', type: 'Campamento' },
+      'Camp niños',
+      'Camp niñas',
+      'Camp Mixto',
+      'Camp niños bajos recursos',
+      'Camp niños necesidades especiales',
     ],
   },
   intern: {
@@ -635,13 +635,7 @@ const EMPLOYERS = {
     textColor: 'white',
     icon: 'briefcase',
     tone: 'sky',
-    employers: [
-      { name: 'Empleador 1', location: 'Estado', type: 'Empresa' },
-      { name: 'Empleador 2', location: 'Estado', type: 'Empresa' },
-      { name: 'Empleador 3', location: 'Estado', type: 'Empresa' },
-      { name: 'Empleador 4', location: 'Estado', type: 'Empresa' },
-      { name: 'Empleador 5', location: 'Estado', type: 'Empresa' },
-    ],
+    employers: ['Vacantes de gastronomía y turismo'],
   },
   support: {
     name: 'Support Staff',
@@ -649,12 +643,13 @@ const EMPLOYERS = {
     textColor: 'white',
     icon: 'chef',
     tone: 'orange',
+    subtitle: 'Tipos de puestos',
     employers: [
-      { name: 'Empleador 1', location: 'Estado', type: 'Campamento' },
-      { name: 'Empleador 2', location: 'Estado', type: 'Campamento' },
-      { name: 'Empleador 3', location: 'Estado', type: 'Campamento' },
-      { name: 'Empleador 4', location: 'Estado', type: 'Campamento' },
-      { name: 'Empleador 5', location: 'Estado', type: 'Campamento' },
+      'Housekeeper',
+      'Mantenimiento',
+      'Lavandería / Laundry',
+      'Kitchen Staff',
+      'Office Staff',
     ],
   },
 };
@@ -678,18 +673,17 @@ const Employers = ({ embedded = false }) => (
             <div>
               <span className="eyebrow">Programa</span>
               <h3 style={{ marginTop: 4, fontSize: 26 }}>{prog.name}</h3>
+              {prog.subtitle && <div style={{ fontSize: 14, color: 'var(--ink-soft)', fontWeight: 600, marginTop: 2 }}>{prog.subtitle}</div>}
             </div>
           </div>
 
-          {/* Grid of 5 employers */}
+          {/* Grid of categories */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 18 }} className="employers-grid">
-            {prog.employers.map((e, i) => (
+            {prog.employers.map((category, i) => (
               <div key={i} className="card" style={{ overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-                <Placeholder label="Foto" tone={prog.tone} ratio="1/1" style={{ borderRadius: 0 }} />
-                <div style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 4 }}>
-                  <h4 style={{ fontSize: 15, lineHeight: 1.25 }}>{e.name}</h4>
-                  <div style={{ fontSize: 13, color: 'var(--ink-soft)', fontWeight: 600 }}>{e.location}</div>
-                  <div style={{ fontSize: 12, color: 'var(--blue)', fontWeight: 700, marginTop: 4, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{e.type}</div>
+                <div style={{ aspectRatio: '1/1', backgroundColor: prog.color, backgroundImage: `url(assets/employers/${key}-${i + 1}.webp)`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
+                <div style={{ padding: '20px 16px', display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1, minHeight: 80 }}>
+                  <h4 style={{ fontSize: 17, fontWeight: 800, color: 'var(--ink)', textAlign: 'center', lineHeight: 1.3 }}>{category}</h4>
                 </div>
               </div>
             ))}
