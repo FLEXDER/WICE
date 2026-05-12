@@ -285,7 +285,9 @@ const Team = ({ embedded = false }) => (
           const tones = ['sky', 'yellow', 'green', 'orange', 'blue', 'sky', 'yellow'];
           return (
             <div key={i} style={{ background: 'white', borderRadius: 'var(--radius)', overflow: 'hidden', border: '1px solid var(--line)' }}>
-              <Placeholder label={`Foto · ${m.name.split(' ')[0]}`} tone={tones[i]} ratio="4/5" style={{ borderRadius: 0 }} />
+              <div style={{ aspectRatio: '4/5', overflow: 'hidden' }}>
+                <img src={`assets/team/team-${i + 1}.webp`} alt={m.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+              </div>
               <div style={{ padding: 22 }}>
                 <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--orange)' }}>{m.role}</div>
                 <h3 style={{ marginTop: 6, fontSize: 22 }}>{m.name}</h3>
