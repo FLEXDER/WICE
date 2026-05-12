@@ -77,8 +77,8 @@ p { margin: 0; text-wrap: pretty; }
   white-space: nowrap;
 }
 .btn:active { transform: translateY(1px); }
-.btn-primary { background: var(--orange); color: white; box-shadow: 0 8px 20px -6px rgba(255, 97, 0, 0.5); }
-.btn-primary:hover { background: #e85700; box-shadow: 0 12px 28px -8px rgba(255, 97, 0, 0.6); }
+.btn-primary { background: #52d2f8; color: white; box-shadow: 0 8px 20px -6px rgba(82, 210, 248, 0.5); }
+.btn-primary:hover { background: #2bb8e0; box-shadow: 0 12px 28px -8px rgba(82, 210, 248, 0.6); }
 .btn-blue { background: var(--blue); color: white; }
 .btn-blue:hover { background: var(--blue-deep); }
 .btn-ghost { background: transparent; color: var(--ink); border: 1.5px solid var(--line); }
