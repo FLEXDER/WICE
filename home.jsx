@@ -351,7 +351,7 @@ const FAQ = ({ embedded = false }) => {
             <span className="eyebrow">FAQ</span>
             <h2 style={{ marginTop: 12 }}>Las preguntas <span className="text-blue">que todos hacen.</span></h2>
             <p className="lead mt-4">Si tu duda no está aquí, escríbenos por WhatsApp para hablar con un asesor.</p>
-            <a href="https://wa.me/523322130778" target="_blank" rel="noopener" className="btn btn-blue mt-6">
+            <a href={waUrl('523322130778')} target="_blank" rel="noopener" className="btn btn-blue mt-6">
               <Icon name="chat" size={16} /> Pregúntanos por WhatsApp
             </a>
           </div>
@@ -392,7 +392,7 @@ const Contact = ({ openApply, embedded = false }) => (
           </p>
           <div style={{ display: 'flex', gap: 12, marginTop: 28, flexWrap: 'wrap' }}>
             <button className="btn btn-primary btn-lg" onClick={() => openApply()}>Aplicar ahora</button>
-            <a href="https://wa.me/523322130778" target="_blank" rel="noopener" className="btn btn-white btn-lg">Hablar con asesor</a>
+            <a href={waUrl('523322130778')} target="_blank" rel="noopener" className="btn btn-white btn-lg">Hablar con asesor</a>
           </div>
         </div>
         <div style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.2)', backdropFilter: 'blur(20px)', borderRadius: 'var(--radius-lg)', padding: 32 }}>
@@ -455,7 +455,7 @@ const HasEmployer = () => {
           {cards.map((c, i) => (
             <a
               key={i}
-              href={`https://wa.me/${c.phone}?text=${encodeURIComponent(c.msg)}`}
+              href={waUrl(c.phone, c.msg)}
               target="_blank"
               rel="noopener noreferrer"
               className="card"
