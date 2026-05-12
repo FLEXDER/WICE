@@ -608,9 +608,9 @@ const EMPLOYERS = {
     icon: 'sun',
     tone: 'yellow',
     employers: [
-      'Parques nacionales',
-      'Parques de diversiones',
-      'Parque acuático',
+      'Parques Nacionales',
+      'Parques de Diversiones',
+      'Parque Acuático',
       'Hoteles',
       'Restaurantes',
     ],
@@ -622,11 +622,11 @@ const EMPLOYERS = {
     icon: 'tent',
     tone: 'green',
     employers: [
-      'Camp niños',
-      'Camp niñas',
+      'Camp Niños',
+      'Camp Niñas',
       'Camp Mixto',
-      'Camp niños bajos recursos',
-      'Camp niños necesidades especiales',
+      'Camp Niños Bajos Recursos',
+      'Camp Niños Necesidades Especiales',
     ],
   },
   intern: {
@@ -647,7 +647,7 @@ const EMPLOYERS = {
     employers: [
       'Housekeeper',
       'Mantenimiento',
-      'Lavandería / Laundry',
+      'Lavandería',
       'Kitchen Staff',
       'Office Staff',
     ],
