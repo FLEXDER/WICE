@@ -1,5 +1,15 @@
 // Shared UI components for WICE MX
 
+// WhatsApp helper — bypasses intermediate page on desktop by using web.whatsapp.com directly
+// On mobile, uses wa.me which opens the WhatsApp app
+const waUrl = (phone, text) => {
+  const isMobile = typeof navigator !== 'undefined' && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  if (isMobile) {
+    return text ? `https://wa.me/${phone}?text=${encodeURIComponent(text)}` : `https://wa.me/${phone}`;
+  }
+  return text ? `https://web.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(text)}` : `https://web.whatsapp.com/send?phone=${phone}`;
+};
+
 const Logo = ({ variant = 'color', height = 52 }) => {
   const src = {
     color: 'assets/logo-color.png',
@@ -114,7 +124,7 @@ const Header = ({ route, navigate, openApply }) => {
           ))}
         </nav>
         <div className="header-cta">
-          <a href="https://wa.me/523322130778" target="_blank" rel="noopener noreferrer" className="btn btn-ghost desktop-only">Hablar con asesor</a>
+          <a href={waUrl('523322130778')} target="_blank" rel="noopener noreferrer" className="btn btn-ghost desktop-only">Hablar con asesor</a>
           <button className="btn btn-primary" onClick={() => openApply()}>Aplicar ahora <Icon name="arrow" size={16} /></button>
           <button className="menu-btn" onClick={() => setOpen(!open)} aria-label="Menú">
             <Icon name={open ? 'close' : 'menu'} />
@@ -194,7 +204,7 @@ const Footer = ({ navigate, openApply }) => (
 );
 
 const Fab = () => (
-  <a href="https://wa.me/523322130778" target="_blank" rel="noopener" className="fab">
+  <a href={waUrl('523322130778')} target="_blank" rel="noopener" className="fab">
     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.51 5.26l-.999 3.648 3.978-1.61z"/></svg>
     WhatsApp
   </a>
@@ -442,4 +452,4 @@ const HeroCarousel = ({ images = [], interval = 5000 }) => {
   );
 };
 
-Object.assign(window, { Logo, Icon, Placeholder, Header, Footer, Fab, HeroCarousel });
+Object.assign(window, { Logo, Icon, Placeholder, Header, Footer, Fab, HeroCarousel, waUrl });
