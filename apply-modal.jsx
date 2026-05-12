@@ -1,8 +1,9 @@
-// New ApplyModal — multi-step, in-page, no redirects. Posts to Jotform via fetch.
+// ApplyModal — multi-step, in-page, no redirects. Posts to Jotform via fetch.
+// All visible copy comes from t.apply; program names (cfg.label) are proper nouns.
 const ApplyModal = ({ open, onClose, defaultProgram = '', initialProgram = '' }) => {
+  const { t } = useLang();
+
   // Defensive: only accept valid program keys (must exist in JOTFORM_CONFIG).
-  // This prevents bugs where a click event or other invalid value gets passed
-  // as a "program", which would silently break the form rendering.
   const isValidProgram = (p) => typeof p === 'string' && p && window.JOTFORM_CONFIG && window.JOTFORM_CONFIG[p];
   const safeLocked = isValidProgram(initialProgram) ? initialProgram : '';
   const safeDefault = isValidProgram(defaultProgram) ? defaultProgram : '';
@@ -45,46 +46,48 @@ const ApplyModal = ({ open, onClose, defaultProgram = '', initialProgram = '' })
   if (!open) return null;
 
   const cfg = program ? window.JOTFORM_CONFIG[program] : null;
+  // Program names are proper nouns — stay the same in both languages
   const programs = [
-    { id: 'swt', label: 'Summer Work & Travel', color: '#FFD731', icon: 'sun', text: 'var(--ink)' },
-    { id: 'camp', label: 'Camp Exchange', color: '#a7d99f', icon: 'tent', text: 'var(--ink)' },
-    { id: 'intern', label: 'Internship & Trainee', color: '#bcd9e8', icon: 'briefcase', text: 'var(--ink)' },
-    { id: 'support', label: 'Support Staff', color: '#fbb78c', icon: 'chef', text: 'var(--ink)' },
+    { id: 'swt',     label: 'Summer Work & Travel', color: '#FFD731', icon: 'sun',       text: 'var(--ink)' },
+    { id: 'camp',    label: 'Camp Exchange',        color: '#a7d99f', icon: 'tent',      text: 'var(--ink)' },
+    { id: 'intern',  label: 'Internship & Trainee', color: '#bcd9e8', icon: 'briefcase', text: 'var(--ink)' },
+    { id: 'support', label: 'Support Staff',        color: '#fbb78c', icon: 'chef',      text: 'var(--ink)' },
   ];
 
   const update = (k, v) => setForm((f) => ({ ...f, [k]: v }));
 
   const validate = () => {
     const e = {};
-    if (!cfg) { setErrors({ _global: 'Selecciona un programa' }); setStep('select'); return false; }
+    const ae = t.apply.errors;
+    if (!cfg) { setErrors({ _global: ae.selectProgram }); setStep('select'); return false; }
     const needs = cfg.needs || [];
-    if (!form.firstName.trim()) e.firstName = 'Requerido';
-    if (!form.lastName.trim()) e.lastName = 'Requerido';
-    if (form.phoneNumber.length !== 10) e.phone = 'Ingresa 10 dígitos';
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = 'Correo inválido';
+    if (!form.firstName.trim()) e.firstName = ae.required;
+    if (!form.lastName.trim()) e.lastName = ae.required;
+    if (form.phoneNumber.length !== 10) e.phone = ae.phoneLength;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = ae.email;
     if (!form.dobMonth || !form.dobDay || !form.dobYear) {
-      e.dob = 'Completa la fecha';
+      e.dob = ae.dobIncomplete;
     } else {
       const d = new Date(`${form.dobYear}-${form.dobMonth}-${form.dobDay}`);
-      if (isNaN(d.getTime()) || d.getMonth() + 1 !== Number(form.dobMonth)) e.dob = 'Fecha inválida';
+      if (isNaN(d.getTime()) || d.getMonth() + 1 !== Number(form.dobMonth)) e.dob = ae.dobInvalid;
     }
-    if (!form.residence.trim()) e.residence = 'Requerido';
-    if (!form.university.trim()) e.university = 'Requerido';
-    if (needs.includes('career') && !form.career.trim()) e.career = 'Requerido';
-    if (needs.includes('semester') && !form.semester) e.semester = 'Requerido';
-    if (needs.includes('occupation') && !form.occupation.trim()) e.occupation = 'Requerido';
-    if (!form.englishLevel) e.englishLevel = 'Selecciona un nivel';
-    if (needs.includes('skills') && form.skills.length === 0) e.skills = 'Selecciona al menos una';
-    if (needs.includes('expSkills') && !form.experienceSkills.trim()) e.experienceSkills = 'Requerido';
-    if (needs.includes('expKids') && !form.experienceKids.trim()) e.experienceKids = 'Requerido';
-    if (needs.includes('aptitudes') && !form.aptitudes.trim()) e.aptitudes = 'Requerido';
-    if (needs.includes('availability') && !form.availability.trim()) e.availability = 'Requerido';
+    if (!form.residence.trim()) e.residence = ae.required;
+    if (!form.university.trim()) e.university = ae.required;
+    if (needs.includes('career') && !form.career.trim()) e.career = ae.required;
+    if (needs.includes('semester') && !form.semester) e.semester = ae.required;
+    if (needs.includes('occupation') && !form.occupation.trim()) e.occupation = ae.required;
+    if (!form.englishLevel) e.englishLevel = ae.english;
+    if (needs.includes('skills') && form.skills.length === 0) e.skills = ae.skillsMin;
+    if (needs.includes('expSkills') && !form.experienceSkills.trim()) e.experienceSkills = ae.required;
+    if (needs.includes('expKids') && !form.experienceKids.trim()) e.experienceKids = ae.required;
+    if (needs.includes('aptitudes') && !form.aptitudes.trim()) e.aptitudes = ae.required;
+    if (needs.includes('availability') && !form.availability.trim()) e.availability = ae.required;
     if (needs.includes('why')) {
-      if (!form.whyParticipate.trim()) e.whyParticipate = 'Requerido';
-      else if (form.whyParticipate.trim().length < 50) e.whyParticipate = 'Mínimo 50 caracteres';
+      if (!form.whyParticipate.trim()) e.whyParticipate = ae.required;
+      else if (form.whyParticipate.trim().length < 50) e.whyParticipate = ae.whyMin;
     }
-    if (!form.howFound.trim()) e.howFound = 'Requerido';
-    if (!form.acceptTerms) e.acceptTerms = 'Debes aceptar los términos';
+    if (!form.howFound.trim()) e.howFound = ae.required;
+    if (!form.acceptTerms) e.acceptTerms = ae.terms;
     setErrors(e);
     return Object.keys(e).length === 0;
   };
@@ -107,6 +110,7 @@ const ApplyModal = ({ open, onClose, defaultProgram = '', initialProgram = '' })
     fd.append(f.residence, form.residence);
     fd.append(f.university, form.university);
     if (f.semesterAndCareer) {
+      // Backend label kept in Spanish so existing Jotform reports stay consistent
       fd.append(f.semesterAndCareer, `Semestre ${form.semester} - ${form.career}`);
     }
     if (f.occupation) fd.append(f.occupation, form.occupation);
@@ -135,26 +139,24 @@ const ApplyModal = ({ open, onClose, defaultProgram = '', initialProgram = '' })
     }
   };
 
-  const SEMESTERS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', 'Egresado'];
-
   return (
     <div className="modal-backdrop" onClick={onClose}>
       <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxHeight: '92vh', display: 'flex', flexDirection: 'column' }}>
         <div style={{ padding: '28px 32px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 16, borderBottom: '1px solid var(--line)' }}>
           <div>
-            <span className="eyebrow">Aplicación</span>
+            <span className="eyebrow">{t.apply.eyebrow}</span>
             {step === 'select' ? (
               <>
-                <h3 style={{ marginTop: 8, fontSize: 22 }}>¿Qué programa te interesa?</h3>
-                <p className="text-soft" style={{ fontSize: 13, marginTop: 6 }}>Cada programa tiene su propio formulario. Elige el tuyo.</p>
+                <h3 style={{ marginTop: 8, fontSize: 22 }}>{t.apply.selectTitle}</h3>
+                <p className="text-soft" style={{ fontSize: 13, marginTop: 6 }}>{t.apply.selectDesc}</p>
               </>
             ) : status === 'success' ? (
-              <h3 style={{ marginTop: 8, fontSize: 22 }}>¡Recibimos tu aplicación!</h3>
+              <h3 style={{ marginTop: 8, fontSize: 22 }}>{t.apply.successTitle}</h3>
             ) : (
-              <h3 style={{ marginTop: 8, fontSize: 22 }}>Aplica a {cfg?.label || 'tu programa'}</h3>
+              <h3 style={{ marginTop: 8, fontSize: 22 }}>{window.tpl(t.apply.applyTo, { program: (cfg && cfg.label) || t.apply.fallbackProgram })}</h3>
             )}
           </div>
-          <button onClick={onClose} aria-label="Cerrar" style={{ width: 36, height: 36, borderRadius: 999, background: 'var(--bg-soft)', cursor: 'pointer', flexShrink: 0 }}>
+          <button onClick={onClose} aria-label={t.common.close} style={{ width: 36, height: 36, borderRadius: 999, background: 'var(--bg-soft)', cursor: 'pointer', flexShrink: 0 }}>
             <Icon name="close" size={18} />
           </button>
         </div>
@@ -193,7 +195,7 @@ const ApplyModal = ({ open, onClose, defaultProgram = '', initialProgram = '' })
                   className="btn btn-primary btn-lg"
                   style={{ width: '100%', justifyContent: 'center', opacity: program ? 1 : 0.5 }}
                 >
-                  Continuar <Icon name="arrow" size={16} />
+                  {t.common.continue} <Icon name="arrow" size={16} />
                 </button>
               </div>
             </>
@@ -203,82 +205,85 @@ const ApplyModal = ({ open, onClose, defaultProgram = '', initialProgram = '' })
             <form onSubmit={submit} style={{ padding: 24, display: 'flex', flexDirection: 'column', gap: 14 }}>
               {!lockedProgram && (
                 <button type="button" onClick={() => setStep('select')} style={{ alignSelf: 'flex-start', display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 13, fontWeight: 600, color: 'var(--blue)', background: 'transparent', padding: '4px 0', cursor: 'pointer' }}>
-                  ← Cambiar programa
+                  {t.common.changeProgram}
                 </button>
               )}
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-                <TextInput label="Nombre" required value={form.firstName} onChange={(v) => update('firstName', v)} error={errors.firstName} />
-                <TextInput label="Apellidos" required value={form.lastName} onChange={(v) => update('lastName', v)} error={errors.lastName} />
+                <TextInput label={t.apply.labels.firstName} required value={form.firstName} onChange={(v) => update('firstName', v)} error={errors.firstName} />
+                <TextInput label={t.apply.labels.lastName}  required value={form.lastName}  onChange={(v) => update('lastName', v)}  error={errors.lastName} />
               </div>
 
-              <PhoneInput label="Teléfono" required area={form.phoneArea} number={form.phoneNumber}
+              <PhoneInput label={t.apply.labels.phone} required area={form.phoneArea} number={form.phoneNumber}
                 onChangeArea={(v) => update('phoneArea', v)} onChangeNumber={(v) => update('phoneNumber', v)}
                 error={errors.phone} />
 
-              <TextInput label="Correo electrónico" type="email" required value={form.email} onChange={(v) => update('email', v)} error={errors.email} />
+              <TextInput label={t.apply.labels.email} type="email" required value={form.email} onChange={(v) => update('email', v)} error={errors.email} />
 
-              <DateInput label="Fecha de nacimiento" required
+              <DateInput label={t.apply.labels.dob} required
                 month={form.dobMonth} day={form.dobDay} year={form.dobYear}
                 onChange={({ month, day, year }) => setForm((f) => ({ ...f, dobMonth: month, dobDay: day, dobYear: year }))}
                 error={errors.dob} />
 
-              <TextInput label="Lugar de residencia" required value={form.residence} onChange={(v) => update('residence', v)} error={errors.residence} />
-              <TextInput label="Universidad" required value={form.university} onChange={(v) => update('university', v)} error={errors.university} />
+              <TextInput label={t.apply.labels.residence}  required value={form.residence}  onChange={(v) => update('residence', v)}  error={errors.residence} />
+              <TextInput label={t.apply.labels.university} required value={form.university} onChange={(v) => update('university', v)} error={errors.university} />
 
               {cfg.needs.includes('career') && (
                 <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 12 }}>
-                  <TextInput label="Carrera" required value={form.career} onChange={(v) => update('career', v)} error={errors.career} />
-                  <Select label="Semestre" required value={form.semester} onChange={(v) => update('semester', v)} options={SEMESTERS} error={errors.semester} />
+                  <TextInput label={t.apply.labels.career} required value={form.career} onChange={(v) => update('career', v)} error={errors.career} />
+                  <Select label={t.apply.labels.semester} required value={form.semester} onChange={(v) => update('semester', v)} options={t.apply.semesterOptions} error={errors.semester} />
                 </div>
               )}
 
               {cfg.needs.includes('occupation') && (
-                <TextInput label="Ocupación actual" required value={form.occupation} onChange={(v) => update('occupation', v)} error={errors.occupation} />
+                <TextInput label={t.apply.labels.occupation} required value={form.occupation} onChange={(v) => update('occupation', v)} error={errors.occupation} />
               )}
 
-              <RadioGroup label="Nivel de inglés" required value={form.englishLevel}
+              <RadioGroup label={t.apply.labels.englishLevel} required value={form.englishLevel}
                 onChange={(v) => update('englishLevel', v)}
-                options={[{ value: 'intermedio', label: 'Intermedio' }, { value: 'avanzado', label: 'Avanzado' }]}
+                options={[
+                  { value: 'intermedio', label: t.apply.english.intermediate },
+                  { value: 'avanzado',   label: t.apply.english.advanced },
+                ]}
                 error={errors.englishLevel} />
 
               {cfg.needs.includes('skills') && (
-                <SkillsCheckboxGrid label="Habilidades / deportes" required value={form.skills}
+                <SkillsCheckboxGrid label={t.apply.labels.skills} required value={form.skills}
                   onChange={(v) => update('skills', v)} error={errors.skills} />
               )}
 
               {cfg.needs.includes('expSkills') && (
-                <Textarea label="Experiencia en esas habilidades" required rows={3}
+                <Textarea label={t.apply.labels.expSkills} required rows={3}
                   value={form.experienceSkills} onChange={(v) => update('experienceSkills', v)}
                   error={errors.experienceSkills} />
               )}
 
               {cfg.needs.includes('expKids') && (
-                <Textarea label="Experiencia con niños" required rows={3}
+                <Textarea label={t.apply.labels.expKids} required rows={3}
                   value={form.experienceKids} onChange={(v) => update('experienceKids', v)}
                   error={errors.experienceKids} />
               )}
 
               {cfg.needs.includes('aptitudes') && (
-                <Textarea label="¿Por qué eres apto para el trabajo?" required rows={3}
+                <Textarea label={t.apply.labels.aptitudes} required rows={3}
                   value={form.aptitudes} onChange={(v) => update('aptitudes', v)}
                   error={errors.aptitudes} />
               )}
 
               {cfg.needs.includes('availability') && (
-                <Textarea label="Disponibilidad de fechas" required rows={2}
+                <Textarea label={t.apply.labels.availability} required rows={2}
                   value={form.availability} onChange={(v) => update('availability', v)}
                   error={errors.availability} />
               )}
 
               {cfg.needs.includes('why') && (
-                <Textarea label="¿Por qué quieres participar en el programa?" required rows={4}
-                  hint="Mínimo 50 caracteres"
+                <Textarea label={t.apply.labels.whyParticipate} required rows={4}
+                  hint={t.apply.hints.why}
                   value={form.whyParticipate} onChange={(v) => update('whyParticipate', v)}
                   error={errors.whyParticipate} />
               )}
 
-              <Textarea label="¿Cómo te enteraste de nosotros?" required rows={2}
+              <Textarea label={t.apply.labels.howFound} required rows={2}
                 value={form.howFound} onChange={(v) => update('howFound', v)}
                 error={errors.howFound} />
 
@@ -288,7 +293,7 @@ const ApplyModal = ({ open, onClose, defaultProgram = '', initialProgram = '' })
                 <div style={{ background: '#fee', color: '#900', padding: 12, borderRadius: 10, fontSize: 13, display: 'flex', gap: 8, alignItems: 'flex-start' }}>
                   <span aria-hidden>⚠</span>
                   <div>
-                    Hubo un problema enviando tu aplicación. Inténtalo de nuevo o escríbenos a contacto@wice.com.mx
+                    {t.apply.errorTitle}
                   </div>
                 </div>
               )}
@@ -296,11 +301,11 @@ const ApplyModal = ({ open, onClose, defaultProgram = '', initialProgram = '' })
               <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
                 {status === 'error' && (
                   <button type="button" onClick={() => setStatus('idle')} className="btn btn-ghost" style={{ flex: 1, justifyContent: 'center' }}>
-                    Reintentar
+                    {t.common.retry}
                   </button>
                 )}
                 <button type="submit" disabled={status === 'loading'} className="btn btn-primary btn-lg" style={{ flex: 2, justifyContent: 'center' }}>
-                  {status === 'loading' ? 'Enviando…' : <>Enviar aplicación <Icon name="arrow" size={16} /></>}
+                  {status === 'loading' ? t.common.sending : <>{t.common.send} <Icon name="arrow" size={16} /></>}
                 </button>
               </div>
             </form>
@@ -312,12 +317,12 @@ const ApplyModal = ({ open, onClose, defaultProgram = '', initialProgram = '' })
                 <Icon name="check" size={36} stroke={3} />
               </div>
               <p style={{ fontSize: 16, color: 'var(--ink)', lineHeight: 1.6, fontWeight: 600 }}>
-                Tu aplicación llegó.
+                {t.apply.successMsg1}
               </p>
               <p style={{ fontSize: 14, color: 'var(--ink-soft)', lineHeight: 1.6, marginTop: 8 }}>
-                Te contactamos en menos de 48 horas para los siguientes pasos de <b>{cfg?.label || 'tu programa'}</b>.
+                {t.apply.successMsg2} <b>{(cfg && cfg.label) || t.apply.fallbackProgram}</b>.
               </p>
-              <button onClick={onClose} className="btn btn-blue btn-lg" style={{ marginTop: 24, justifyContent: 'center' }}>Cerrar</button>
+              <button onClick={onClose} className="btn btn-blue btn-lg" style={{ marginTop: 24, justifyContent: 'center' }}>{t.common.close}</button>
             </div>
           )}
         </div>
