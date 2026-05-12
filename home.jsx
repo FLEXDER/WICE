@@ -487,7 +487,7 @@ const Terms = () => (
       <p className="lead mt-4">
         Lee detalladamente los términos y condiciones de International Cultural Exchange antes de aplicar en nuestra página. Una vez leídos, se da el entendido de que estás de acuerdo y aceptas todas y cada una de las cláusulas que contiene este documento.
       </p>
-      <div style={{ marginTop: 48, display: 'flex', flexDirection: 'column', gap: 32, fontSize: 15, lineHeight: 1.7, color: 'var(--ink-soft)' }}>
+      <div className="terms-content" style={{ marginTop: 48, display: 'flex', flexDirection: 'column', gap: 32, fontSize: 15, lineHeight: 1.7, color: 'var(--ink-soft)' }}>
         <section>
           <h3 style={{ color: 'var(--ink)' }}>I. Definiciones</h3>
           <ol style={{ marginTop: 12, paddingLeft: 20, display: 'flex', flexDirection: 'column', gap: 10 }}>
