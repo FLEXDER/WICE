@@ -1,4 +1,8 @@
 // Form field primitives & validation
+// Labels and placeholders that were hardcoded in Spanish now come from
+// useLang(). The skills list (window.SKILLS_27) still lives in apply-config.jsx
+// and remains as-is until that file is also updated with EN skill names.
+
 const fieldBase = {
   width: '100%',
   marginTop: 6,
@@ -62,24 +66,28 @@ const Textarea = ({ label, value, onChange, error, rows = 3, placeholder, requir
   </div>
 );
 
-const Select = ({ label, value, onChange, options, error, required, placeholder = 'Selecciona…' }) => (
-  <div>
-    <label style={labelStyle}>{label}{required && ' *'}</label>
-    <select
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-      style={{ ...fieldBase, borderColor: error ? '#c43d3d' : 'var(--line)' }}
-    >
-      <option value="">{placeholder}</option>
-      {options.map((o) => (
-        <option key={typeof o === 'object' ? o.value : o} value={typeof o === 'object' ? o.value : o}>
-          {typeof o === 'object' ? o.label : o}
-        </option>
-      ))}
-    </select>
-    <FieldErr>{error}</FieldErr>
-  </div>
-);
+const Select = ({ label, value, onChange, options, error, required, placeholder }) => {
+  const { t } = useLang();
+  const ph = placeholder != null ? placeholder : t.common.select;
+  return (
+    <div>
+      <label style={labelStyle}>{label}{required && ' *'}</label>
+      <select
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        style={{ ...fieldBase, borderColor: error ? '#c43d3d' : 'var(--line)' }}
+      >
+        <option value="">{ph}</option>
+        {options.map((o) => (
+          <option key={typeof o === 'object' ? o.value : o} value={typeof o === 'object' ? o.value : o}>
+            {typeof o === 'object' ? o.label : o}
+          </option>
+        ))}
+      </select>
+      <FieldErr>{error}</FieldErr>
+    </div>
+  );
+};
 
 const RadioGroup = ({ label, value, onChange, options, error, required }) => (
   <div>
@@ -116,32 +124,38 @@ const RadioGroup = ({ label, value, onChange, options, error, required }) => (
   </div>
 );
 
-const PhoneInput = ({ label, area, number, onChangeArea, onChangeNumber, error, required }) => (
-  <div>
-    <label style={labelStyle}>{label}{required && ' *'}</label>
-    <div style={{ display: 'flex', gap: 8, marginTop: 6 }}>
-      <select
-        value={area}
-        onChange={(e) => onChangeArea(e.target.value)}
-        style={{ ...fieldBase, marginTop: 0, width: 110, borderColor: error ? '#c43d3d' : 'var(--line)' }}
-      >
-        <option value="+52">🇲🇽 +52</option>
-        <option value="+1">🇺🇸 +1</option>
-      </select>
-      <input
-        type="tel"
-        inputMode="numeric"
-        value={number}
-        onChange={(e) => onChangeNumber(e.target.value.replace(/\D/g, '').slice(0, 10))}
-        placeholder="10 dígitos"
-        style={{ ...fieldBase, marginTop: 0, flex: 1, borderColor: error ? '#c43d3d' : 'var(--line)' }}
-      />
+const PhoneInput = ({ label, area, number, onChangeArea, onChangeNumber, error, required }) => {
+  const { t } = useLang();
+  return (
+    <div>
+      <label style={labelStyle}>{label}{required && ' *'}</label>
+      <div style={{ display: 'flex', gap: 8, marginTop: 6 }}>
+        <select
+          value={area}
+          onChange={(e) => onChangeArea(e.target.value)}
+          style={{ ...fieldBase, marginTop: 0, width: 110, borderColor: error ? '#c43d3d' : 'var(--line)' }}
+        >
+          <option value="+52">🇲🇽 +52</option>
+          <option value="+1">🇺🇸 +1</option>
+        </select>
+        <input
+          type="tel"
+          inputMode="numeric"
+          value={number}
+          onChange={(e) => onChangeNumber(e.target.value.replace(/\D/g, '').slice(0, 10))}
+          placeholder={t.apply.hints.phonePlaceholder}
+          style={{ ...fieldBase, marginTop: 0, flex: 1, borderColor: error ? '#c43d3d' : 'var(--line)' }}
+        />
+      </div>
+      <FieldErr>{error}</FieldErr>
     </div>
-    <FieldErr>{error}</FieldErr>
-  </div>
-);
+  );
+};
 
 const DateInput = ({ label, month, day, year, onChange, error, required }) => {
+  const { t } = useLang();
+  // Translated month names — falls back to window.MONTHS_ES if translations missing
+  const months = (t.apply && t.apply.months) || window.MONTHS_ES || [];
   const years = [];
   for (let y = 2010; y >= 1980; y--) years.push(y);
   const days = [];
@@ -151,15 +165,15 @@ const DateInput = ({ label, month, day, year, onChange, error, required }) => {
       <label style={labelStyle}>{label}{required && ' *'}</label>
       <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr 1fr', gap: 8, marginTop: 6 }}>
         <select value={month} onChange={(e) => onChange({ month: e.target.value, day, year })} style={{ ...fieldBase, marginTop: 0, borderColor: error ? '#c43d3d' : 'var(--line)' }}>
-          <option value="">Mes</option>
-          {window.MONTHS_ES.map((m, i) => <option key={m} value={String(i + 1).padStart(2, '0')}>{m}</option>)}
+          <option value="">{t.apply.dateLabels.month}</option>
+          {months.map((m, i) => <option key={i} value={String(i + 1).padStart(2, '0')}>{m}</option>)}
         </select>
         <select value={day} onChange={(e) => onChange({ month, day: e.target.value, year })} style={{ ...fieldBase, marginTop: 0, borderColor: error ? '#c43d3d' : 'var(--line)' }}>
-          <option value="">Día</option>
+          <option value="">{t.apply.dateLabels.day}</option>
           {days.map((d) => <option key={d} value={String(d).padStart(2, '0')}>{d}</option>)}
         </select>
         <select value={year} onChange={(e) => onChange({ month, day, year: e.target.value })} style={{ ...fieldBase, marginTop: 0, borderColor: error ? '#c43d3d' : 'var(--line)' }}>
-          <option value="">Año</option>
+          <option value="">{t.apply.dateLabels.year}</option>
           {years.map((y) => <option key={y} value={String(y)}>{y}</option>)}
         </select>
       </div>
@@ -169,6 +183,8 @@ const DateInput = ({ label, month, day, year, onChange, error, required }) => {
 };
 
 const SkillsCheckboxGrid = ({ label, value, onChange, error, required }) => {
+  const { t } = useLang();
+  const skills = window.SKILLS_27 || [];
   const toggle = (s) => {
     if (value.includes(s)) onChange(value.filter((x) => x !== s));
     else onChange([...value, s]);
@@ -176,9 +192,9 @@ const SkillsCheckboxGrid = ({ label, value, onChange, error, required }) => {
   return (
     <div>
       <label style={labelStyle}>{label}{required && ' *'}</label>
-      <div style={{ fontSize: 11, color: 'var(--ink-soft)', marginTop: 2 }}>Selecciona todas las que apliquen</div>
+      <div style={{ fontSize: 11, color: 'var(--ink-soft)', marginTop: 2 }}>{t.apply.hints.skills}</div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: 6, marginTop: 8 }}>
-        {window.SKILLS_27.map((s) => {
+        {skills.map((s) => {
           const sel = value.includes(s);
           return (
             <button
@@ -207,26 +223,29 @@ const SkillsCheckboxGrid = ({ label, value, onChange, error, required }) => {
   );
 };
 
-const TermsCheckbox = ({ checked, onChange, error }) => (
-  <div>
-    <label style={{ display: 'flex', gap: 10, alignItems: 'flex-start', cursor: 'pointer', padding: 12, border: error ? '2px solid #c43d3d' : '2px solid var(--line)', borderRadius: 12, background: '#fafafa' }}>
-      <input
-        type="checkbox"
-        checked={checked}
-        onChange={(e) => onChange(e.target.checked)}
-        style={{ marginTop: 3, width: 18, height: 18, accentColor: 'var(--blue)' }}
-      />
-      <span style={{ fontSize: 13, color: 'var(--ink)', lineHeight: 1.5 }}>
-        He leído y acepto los{' '}
-        <a href="terminos-y-condiciones.html" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--blue)', textDecoration: 'underline', fontWeight: 700 }}>
-          términos y condiciones
-        </a>
-        .
-      </span>
-    </label>
-    <FieldErr>{error}</FieldErr>
-  </div>
-);
+const TermsCheckbox = ({ checked, onChange, error }) => {
+  const { t } = useLang();
+  return (
+    <div>
+      <label style={{ display: 'flex', gap: 10, alignItems: 'flex-start', cursor: 'pointer', padding: 12, border: error ? '2px solid #c43d3d' : '2px solid var(--line)', borderRadius: 12, background: '#fafafa' }}>
+        <input
+          type="checkbox"
+          checked={checked}
+          onChange={(e) => onChange(e.target.checked)}
+          style={{ marginTop: 3, width: 18, height: 18, accentColor: 'var(--blue)' }}
+        />
+        <span style={{ fontSize: 13, color: 'var(--ink)', lineHeight: 1.5 }}>
+          {t.apply.labels.terms}{' '}
+          <a href="terminos-y-condiciones.html" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--blue)', textDecoration: 'underline', fontWeight: 700 }}>
+            {t.apply.labels.termsLink}
+          </a>
+          .
+        </span>
+      </label>
+      <FieldErr>{error}</FieldErr>
+    </div>
+  );
+};
 
 Object.assign(window, {
   TextInput, Textarea, Select, RadioGroup, PhoneInput, DateInput,
