@@ -269,8 +269,7 @@ const TEAM = [
   { name: 'Mariana Gutiérrez', role: 'Asesora', bio: 'Tu primera llamada es con ella. Honesta, cercana y conoce cada programa de memoria.' },
   { name: 'Alexa Álvarez', role: 'Asesora', bio: 'Te acompaña durante todo tu proceso. Resuelve dudas, hace seguimiento y se asegura de que nada se quede en el aire.' },
   { name: 'Muriel Estrada', role: 'Participant Services & Communications', bio: 'Lleva el proceso de re-aplicación. Si ya viviste un programa con WICE, ella te acompaña en el regreso.' },
-  { name: 'Maria Gutiérrez', role: 'Operaciones internas', bio: 'El motor invisible del equipo. Resuelve pendientes, organiza temas internos y mantiene todo funcionando.' },
-  { name: 'Daniela', role: 'Diseñadora & Community Manager', bio: 'Crea presentaciones, flyers y videos para redes sociales. Si lo viste en Instagram o TikTok, lo más probable es que sea suyo.' },
+  { name: 'María Aguilar', role: 'Operaciones internas', bio: 'El motor invisible del equipo. Resuelve pendientes, organiza temas internos y mantiene todo funcionando.' },
 ];
 
 const Team = ({ embedded = false }) => (
@@ -284,9 +283,9 @@ const Team = ({ embedded = false }) => (
         {TEAM.map((m, i) => {
           const tones = ['sky', 'yellow', 'green', 'orange', 'blue', 'sky', 'yellow'];
           return (
-            <div key={i} style={{ background: 'white', borderRadius: 'var(--radius)', overflow: 'hidden', border: '1px solid var(--line)' }}>
-              <div style={{ aspectRatio: '4/5', overflow: 'hidden' }}>
-                <img src={`assets/team/team-${i + 1}.webp`} alt={m.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            <div key={i} className="team-card" style={{ background: 'white', borderRadius: 'var(--radius)', overflow: 'hidden', border: '1px solid var(--line)' }}>
+              <div style={{ aspectRatio: '4/5', overflow: 'hidden', background: 'white' }}>
+                <img src={`assets/team/team-${i + 1}.webp`} alt="" className="team-photo-img" onError={(e) => { e.target.style.visibility = 'hidden'; }} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
               </div>
               <div style={{ padding: 22 }}>
                 <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--orange)' }}>{m.role}</div>
