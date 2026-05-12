@@ -290,3 +290,6 @@ section { padding: 96px 0; }
 .about-photo:hover .about-photo-img {
   transform: scale(1.06);
 }
+
+/* Terms page — reset section padding so paragraphs are tightly spaced */
+.terms-content section { padding: 0; }
