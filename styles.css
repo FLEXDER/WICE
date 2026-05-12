@@ -295,3 +295,20 @@ section { padding: 96px 0; }
 
 /* Terms page — reset section padding so paragraphs are tightly spaced */
 .terms-content section { padding: 0; }
+
+/* Team cards hover — lift + smooth scale, igual que About photos */
+.team-card {
+  transition: transform .2s ease-out, box-shadow .2s ease-out;
+  will-change: transform;
+}
+.team-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 48px -16px rgba(0,0,0,0.25);
+}
+.team-photo-img {
+  transition: transform .35s ease-out;
+  will-change: transform;
+}
+.team-card:hover .team-photo-img {
+  transform: scale(1.06);
+}
