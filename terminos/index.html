@@ -1,1 +1,480 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index, follow">
+  <title>Términos y Condiciones · WICE México</title>
+  <meta name="description" content="Términos y Condiciones del servicio de WICE México. Programas de intercambio cultural con visa J1.">
+  <link rel="canonical" href="https://wice.org.mx/terminos/">
+
+  <link rel="icon" type="image/png" href="../favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="shortcut icon" href="../favicon.ico">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --yellow: #FFD731;
+      --green:  #639917;
+      --blue:   #196084;
+      --orange: #FF6100;
+      --ink:    #0a1126;
+      --ink-soft: #4a5468;
+      --line:   #e6edf4;
+      --bg-soft: #f8fafc;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
+      background: #ffffff;
+      color: var(--ink);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+      z-index: 100;
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+    .logo-link {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-soft);
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 100px;
+      border: 1px solid var(--line);
+      transition: all 0.2s ease;
+    }
+    .back-link:hover {
+      color: var(--ink);
+      border-color: var(--ink);
+    }
+
+    .hero {
+      padding: 80px 0 48px;
+      text-align: center;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 56px;
+    }
+    .eyebrow {
+      display: inline-block;
+      padding: 6px 14px;
+      background: rgba(25, 96, 132, 0.08);
+      color: var(--blue);
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-size: clamp(34px, 5vw, 48px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+      margin-bottom: 16px;
+      color: var(--ink);
+    }
+    .updated {
+      font-size: 13px;
+      color: var(--ink-soft);
+      font-weight: 500;
+    }
+
+    article {
+      padding-bottom: 80px;
+    }
+    section {
+      margin-bottom: 48px;
+      scroll-margin-top: 100px;
+    }
+    section h2 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.4px;
+      color: var(--ink);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+    }
+    section h2 .num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 28px;
+      height: 28px;
+      padding: 0 8px;
+      background: var(--blue);
+      color: white;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    section h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+    section p {
+      font-size: 15px;
+      color: var(--ink-soft);
+      margin-bottom: 14px;
+    }
+    section ul {
+      list-style: none;
+      padding: 0;
+      margin: 14px 0;
+    }
+    section ul li {
+      position: relative;
+      padding-left: 22px;
+      font-size: 15px;
+      color: var(--ink-soft);
+      margin-bottom: 10px;
+      line-height: 1.55;
+    }
+    section ul li::before {
+      content: '';
+      position: absolute;
+      left: 4px;
+      top: 10px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--blue);
+    }
+    section strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+    section a {
+      color: var(--blue);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      font-weight: 500;
+    }
+    section a:hover { color: var(--ink); }
+
+    .toc {
+      background: var(--bg-soft);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 24px 28px;
+      margin-bottom: 56px;
+    }
+    .toc h4 {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: 14px;
+    }
+    .toc ol {
+      list-style: none;
+      counter-reset: toc;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .toc li { counter-increment: toc; }
+    .toc a {
+      display: block;
+      padding: 6px 0;
+      font-size: 13px;
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.15s ease;
+    }
+    .toc a::before {
+      content: counter(toc, decimal-leading-zero) ".  ";
+      color: var(--blue);
+      font-weight: 700;
+    }
+    .toc a:hover { color: var(--blue); }
+
+    .back-cta {
+      text-align: center;
+      padding: 56px 0;
+      border-top: 1px solid var(--line);
+    }
+    .back-cta .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      background: var(--ink);
+      color: white;
+      border-radius: 100px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .back-cta .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(10, 17, 38, 0.25);
+    }
+
+    .site-footer {
+      padding: 32px 0;
+      border-top: 1px solid var(--line);
+      text-align: center;
+      font-size: 12px;
+      color: var(--ink-soft);
+    }
+    .site-footer a {
+      color: var(--ink-soft);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .site-footer a:hover { color: var(--ink); }
+
+    @media (max-width: 600px) {
+      .container { padding: 0 20px; }
+      .hero { padding: 56px 0 40px; margin-bottom: 40px; }
+      section { margin-bottom: 40px; }
+      section h2 { font-size: 19px; }
+      section p, section ul li { font-size: 14px; }
+      .toc ol { grid-template-columns: 1fr; }
+      .back-link span { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="../" class="logo-link" aria-label="WICE México">WICE</a>
+      <a href="../" class="back-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="19" y1="12" x2="5" y2="12"/>
+          <polyline points="12 19 5 12 12 5"/>
+        </svg>
+        <span>Volver al sitio</span>
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+
+      <div class="hero">
+        <span class="eyebrow">Documento Legal</span>
+        <h1>Términos y Condiciones</h1>
+        <p class="updated">Última actualización: 13 de mayo de 2026</p>
+      </div>
+
+      <nav class="toc" aria-label="Índice del documento">
+        <h4>Contenido</h4>
+        <ol>
+          <li><a href="#s1">Aceptación de los términos</a></li>
+          <li><a href="#s2">Descripción del servicio</a></li>
+          <li><a href="#s3">Proceso de aplicación</a></li>
+          <li><a href="#s4">Costos y formas de pago</a></li>
+          <li><a href="#s5">Cancelaciones y reembolsos</a></li>
+          <li><a href="#s6">Responsabilidades del aplicante</a></li>
+          <li><a href="#s7">Responsabilidades de WICE</a></li>
+          <li><a href="#s8">Limitación de responsabilidad</a></li>
+          <li><a href="#s9">Propiedad intelectual</a></li>
+          <li><a href="#s10">Modificación de términos</a></li>
+          <li><a href="#s11">Ley aplicable</a></li>
+          <li><a href="#s12">Contacto</a></li>
+        </ol>
+      </nav>
+
+      <article>
+
+        <section id="s1">
+          <h2><span class="num">1</span>Aceptación de los términos</h2>
+          <p>Al utilizar el sitio web <strong>wice.org.mx</strong> y al aplicar a cualquiera de los programas ofrecidos por WICE México (en adelante <strong>"WICE"</strong>), usted reconoce haber leído, entendido y aceptado los presentes Términos y Condiciones, así como nuestro <a href="../privacidad/">Aviso de Privacidad</a>.</p>
+          <p>Si no está de acuerdo con alguno de los términos aquí descritos, le pedimos que no utilice nuestros servicios. La aceptación de estos términos es requisito indispensable para iniciar el proceso de aplicación.</p>
+        </section>
+
+        <section id="s2">
+          <h2><span class="num">2</span>Descripción del servicio</h2>
+          <p>WICE es una agencia mexicana especializada en la gestión de programas de intercambio cultural con visa J1 patrocinados por CIEE (Council on International Educational Exchange) y otros sponsors autorizados por el gobierno de los Estados Unidos. Los programas que ofrecemos incluyen:</p>
+          <ul>
+            <li><strong>Summer Work &amp; Travel:</strong> programa para estudiantes universitarios para trabajar y viajar en USA durante el verano.</li>
+            <li><strong>Camp Exchange:</strong> programa para trabajar como counselor o staff en campamentos de verano en USA.</li>
+            <li><strong>Internship &amp; Trainee:</strong> programa de prácticas profesionales pagadas en empresas estadounidenses.</li>
+            <li><strong>Support Staff:</strong> programa para trabajar en áreas operativas (cocina, mantenimiento, limpieza) en campamentos de verano.</li>
+          </ul>
+          <p>WICE actúa como intermediario entre el aplicante, el sponsor autorizado (CIEE), las embajadas y consulados de Estados Unidos, y los empleadores u organizaciones receptoras en territorio estadounidense.</p>
+        </section>
+
+        <section id="s3">
+          <h2><span class="num">3</span>Proceso de aplicación</h2>
+          <p>El proceso de aplicación incluye, sin limitarse a:</p>
+          <ul>
+            <li>Llenado del formulario de aplicación inicial en el sitio web.</li>
+            <li>Entrevista informativa y de evaluación con un asesor de WICE.</li>
+            <li>Entrega de documentación requerida (pasaporte, comprobantes académicos, currículum, entre otros).</li>
+            <li>Pago de las cuotas correspondientes según el programa elegido.</li>
+            <li>Trámite de la visa J1 ante la embajada o consulado de los Estados Unidos.</li>
+            <li>Recepción del formulario DS-2019 emitido por el sponsor.</li>
+            <li>Asistencia pre-viaje y orientación cultural.</li>
+          </ul>
+          <p>La aceptación al programa no es automática y está sujeta al cumplimiento de los requisitos establecidos por WICE, el sponsor y el gobierno de los Estados Unidos. WICE se reserva el derecho de aceptar o rechazar cualquier aplicación.</p>
+        </section>
+
+        <section id="s4">
+          <h2><span class="num">4</span>Costos y formas de pago</h2>
+          <p>Los costos de cada programa serán comunicados al aplicante durante la entrevista informativa y previo a la firma del contrato de servicios. Estos costos pueden variar según:</p>
+          <ul>
+            <li>El programa seleccionado.</li>
+            <li>La duración del programa.</li>
+            <li>Servicios adicionales contratados (seguros, asesoría extra, alojamiento previo, entre otros).</li>
+            <li>El sponsor utilizado y las tarifas vigentes.</li>
+          </ul>
+          <p>Las formas de pago aceptadas serán informadas al momento del contrato. Cualquier cargo adicional ajeno a WICE (por ejemplo, costos consulares, pasaporte, traslados, alojamiento en USA) es responsabilidad exclusiva del aplicante.</p>
+        </section>
+
+        <section id="s5">
+          <h2><span class="num">5</span>Cancelaciones y reembolsos</h2>
+          <p>Las políticas de cancelación y reembolso varían según el programa y la etapa en la que se encuentre el proceso. En términos generales:</p>
+          <ul>
+            <li>Los pagos realizados a terceros (sponsor, embajada, seguros) generalmente no son reembolsables una vez procesados.</li>
+            <li>Las cuotas administrativas de WICE están sujetas a las condiciones específicas detalladas en el contrato de servicios.</li>
+            <li>Si la visa J1 es negada por causas no atribuibles a WICE, se aplicará la política de reembolso vigente al momento de la firma del contrato.</li>
+            <li>Las solicitudes de reembolso deben hacerse por escrito al correo <a href="mailto:contacto@wice.org.mx">contacto@wice.org.mx</a>.</li>
+          </ul>
+          <p>Las condiciones específicas de cancelación y reembolso aplicables a cada caso serán las establecidas en el contrato de servicios firmado entre WICE y el aplicante.</p>
+        </section>
+
+        <section id="s6">
+          <h2><span class="num">6</span>Responsabilidades del aplicante</h2>
+          <p>Al utilizar nuestros servicios, el aplicante se compromete a:</p>
+          <ul>
+            <li>Proporcionar información veraz, completa y actualizada en todo momento.</li>
+            <li>Entregar la documentación solicitada dentro de los plazos establecidos.</li>
+            <li>Cumplir con los requisitos de cada programa (edad, nivel académico, dominio del idioma, etc.).</li>
+            <li>Realizar los pagos correspondientes en tiempo y forma.</li>
+            <li>Asistir a las entrevistas y citas agendadas (con WICE, sponsor o embajada).</li>
+            <li>Cumplir con todas las leyes y regulaciones aplicables tanto en México como en Estados Unidos durante su participación en el programa.</li>
+            <li>Respetar las reglas y políticas del sponsor y del empleador u organización receptora.</li>
+            <li>Mantener una conducta apropiada que represente positivamente a WICE, a México y al programa de intercambio cultural.</li>
+          </ul>
+        </section>
+
+        <section id="s7">
+          <h2><span class="num">7</span>Responsabilidades de WICE</h2>
+          <p>WICE se compromete a:</p>
+          <ul>
+            <li>Brindar asesoría profesional y honesta durante todo el proceso de aplicación.</li>
+            <li>Coordinar la documentación oficial requerida con el sponsor autorizado.</li>
+            <li>Mantener comunicación clara y oportuna con el aplicante.</li>
+            <li>Proteger los datos personales del aplicante conforme a nuestro <a href="../privacidad/">Aviso de Privacidad</a>.</li>
+            <li>Cumplir con las regulaciones del gobierno mexicano y de los Estados Unidos aplicables a los programas de intercambio.</li>
+            <li>Ofrecer soporte ante dudas, contingencias y emergencias durante el programa, según el alcance contratado.</li>
+          </ul>
+        </section>
+
+        <section id="s8">
+          <h2><span class="num">8</span>Limitación de responsabilidad</h2>
+          <p>WICE actúa como agencia gestora y facilitadora entre el aplicante, el sponsor autorizado, las embajadas y consulados, y los empleadores u organizaciones receptoras. En consecuencia, WICE <strong>no es responsable</strong> de:</p>
+          <ul>
+            <li>La decisión de las autoridades migratorias estadounidenses sobre la aprobación o negación de la visa.</li>
+            <li>El comportamiento, decisiones o condiciones laborales del empleador u organización receptora en Estados Unidos.</li>
+            <li>Eventos de fuerza mayor (pandemias, desastres naturales, conflictos políticos, decisiones gubernamentales, entre otros) que afecten el desarrollo del programa.</li>
+            <li>Accidentes, lesiones, enfermedades o pérdidas materiales que sufra el aplicante durante el programa (para esto existen los seguros de gastos médicos internacionales).</li>
+            <li>Cambios en políticas migratorias, costos consulares u otros costos ajenos al servicio directo de WICE.</li>
+            <li>Decisiones personales del aplicante que afecten su programa (incumplimientos, abandono voluntario, infracciones legales, entre otros).</li>
+          </ul>
+          <p>En ningún caso la responsabilidad económica de WICE excederá el monto efectivamente pagado por el aplicante por concepto de servicios directos de la agencia.</p>
+        </section>
+
+        <section id="s9">
+          <h2><span class="num">9</span>Propiedad intelectual</h2>
+          <p>Todos los contenidos del sitio web <strong>wice.org.mx</strong>, incluyendo textos, imágenes, logos, gráficos, videos, código fuente y demás materiales, son propiedad de WICE México o de sus respectivos titulares y están protegidos por las leyes de propiedad intelectual aplicables.</p>
+          <p>Queda prohibida la reproducción, distribución, modificación o uso comercial de cualquier contenido del sitio sin autorización previa y por escrito de WICE.</p>
+        </section>
+
+        <section id="s10">
+          <h2><span class="num">10</span>Modificación de términos</h2>
+          <p>WICE se reserva el derecho de modificar los presentes Términos y Condiciones en cualquier momento. Las modificaciones serán publicadas en esta misma página y entrarán en vigor a partir de su fecha de publicación.</p>
+          <p>Es responsabilidad del usuario revisar periódicamente este documento para mantenerse informado de cualquier cambio. El uso continuado del sitio o de los servicios después de la publicación de las modificaciones constituye la aceptación de los nuevos términos.</p>
+        </section>
+
+        <section id="s11">
+          <h2><span class="num">11</span>Ley aplicable y jurisdicción</h2>
+          <p>Los presentes Términos y Condiciones se rigen por las leyes vigentes en los Estados Unidos Mexicanos. Para la interpretación y cumplimiento de los mismos, las partes se someten expresamente a la jurisdicción de los tribunales competentes de la ciudad de Guadalajara, Jalisco, México, renunciando a cualquier otro fuero que pudiera corresponderles por razón de sus domicilios presentes o futuros.</p>
+        </section>
+
+        <section id="s12">
+          <h2><span class="num">12</span>Contacto</h2>
+          <p>Si tiene preguntas, comentarios o aclaraciones sobre los presentes Términos y Condiciones, puede contactarnos a través de los siguientes medios:</p>
+          <ul>
+            <li><strong>Correo electrónico:</strong> <a href="mailto:contacto@wice.org.mx">contacto@wice.org.mx</a></li>
+            <li><strong>Teléfono y WhatsApp:</strong> <a href="https://wa.me/523322130778">+52 33 2213 0778</a></li>
+            <li><strong>Domicilio:</strong> San Juan Bosco 3664, Guadalajara, Jalisco, México</li>
+          </ul>
+        </section>
+
+      </article>
+
+      <div class="back-cta">
+        <a href="../" class="btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="19" y1="12" x2="5" y2="12"/>
+            <polyline points="12 19 5 12 12 5"/>
+          </svg>
+          Volver al inicio
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      © 2026 WICE México · We Inspire Cultural Exchange · <a href="../">wice.org.mx</a>
+    </div>
+  </footer>
+
+</body>
+</html>
 
