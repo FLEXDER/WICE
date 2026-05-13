@@ -58,7 +58,7 @@ const Hero = ({ openApply, navigate }) => {
             />
             <div style={{ position: 'absolute', top: 24, left: 24, color: 'white', fontFamily: 'Montserrat', fontSize: 11, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.95, textShadow: '0 1px 3px rgba(0,0,0,0.3)', zIndex: 2 }}>{t.hero.summerLabel}</div>
           </div>
-          <div style={{ position: 'absolute', bottom: -24, left: -24, background: 'white', padding: 18, borderRadius: 18, boxShadow: 'var(--shadow-lg)', display: 'flex', gap: 14, alignItems: 'center', maxWidth: 240, zIndex: 2 }}>
+          <div className="hero-float-badge" style={{ position: 'absolute', bottom: -24, left: -24, background: 'white', padding: 18, borderRadius: 18, boxShadow: 'var(--shadow-lg)', display: 'flex', gap: 14, alignItems: 'center', maxWidth: 240, zIndex: 2 }}>
             <div style={{ width: 48, height: 48, borderRadius: 12, background: 'var(--yellow)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
               <Icon name="plane" size={22} />
             </div>
@@ -67,7 +67,7 @@ const Hero = ({ openApply, navigate }) => {
               <div style={{ fontSize: 12, color: 'var(--ink-soft)' }}>{t.hero.j1Sub}</div>
             </div>
           </div>
-          <div style={{ position: 'absolute', top: 20, right: 16, background: 'var(--orange)', color: 'white', padding: '12px 18px', borderRadius: 12, fontWeight: 700, fontSize: 13, lineHeight: 1.25, boxShadow: 'var(--shadow)', transform: 'rotate(4deg)', zIndex: 2 }}>
+          <div className="hero-float-badge" style={{ position: 'absolute', top: 20, right: 16, background: 'var(--orange)', color: 'white', padding: '12px 18px', borderRadius: 12, fontWeight: 700, fontSize: 13, lineHeight: 1.25, boxShadow: 'var(--shadow)', transform: 'rotate(4deg)', zIndex: 2 }}>
             {t.hero.timeBadge1}<br/>{t.hero.timeBadge2}
           </div>
         </div>
