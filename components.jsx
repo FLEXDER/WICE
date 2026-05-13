@@ -266,7 +266,7 @@ const Footer = ({ navigate, openApply }) => {
             }}>{t.footer.whatIsWice}</a>
             <a href="#" onClick={(e) => { e.preventDefault(); navigate('team'); }}>{t.footer.teamLink}</a>
             <a href="#" onClick={(e) => { e.preventDefault(); navigate('faq'); }}>{t.footer.faqLink}</a>
-            <a href="#" onClick={(e) => { e.preventDefault(); navigate('terms'); }}>{t.footer.termsLink}</a>
+            <a href="terminos/" target="_blank" rel="noopener noreferrer">{t.footer.termsLink}</a>
             <a href="#" onClick={(e) => { e.preventDefault(); openApply(); }}>{t.footer.applyLink}</a>
           </div>
           <div>
