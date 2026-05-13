@@ -339,11 +339,11 @@ window.TRANSLATIONS = {
           'Practicante de Hospitalidad',
         ],
         support: [
-          'Housekeeper',
+          'Personal de Limpieza',
           'Mantenimiento',
           'Lavandería',
-          'Kitchen Staff',
-          'Office Staff',
+          'Personal de Cocina',
+          'Personal Administrativo',
         ],
       },
       subtitles: {
