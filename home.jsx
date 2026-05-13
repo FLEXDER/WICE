@@ -608,13 +608,6 @@ const EMPLOYERS = {
     textColor: 'var(--ink)',
     icon: 'sun',
     tone: 'yellow',
-    employers: [
-      'Parques Nacionales',
-      'Parques de Diversiones',
-      'Parque Acuático',
-      'Hoteles',
-      'Restaurantes',
-    ],
   },
   camp: {
     name: 'Camp Exchange',
@@ -622,13 +615,6 @@ const EMPLOYERS = {
     textColor: 'white',
     icon: 'tent',
     tone: 'green',
-    employers: [
-      'Camp Niños',
-      'Camp Niñas',
-      'Camp Mixto',
-      'Camp Niños Bajos Recursos',
-      'Camp Niños Necesidades Especiales',
-    ],
   },
   intern: {
     name: 'Internship & Trainee',
@@ -636,13 +622,6 @@ const EMPLOYERS = {
     textColor: 'white',
     icon: 'briefcase',
     tone: 'sky',
-    employers: [
-      'Architecture Intern',
-      'Marketing Intern',
-      'Culinary Intern',
-      'Hotel Operations Intern',
-      'Hospitality Intern',
-    ],
   },
   support: {
     name: 'Support Staff',
@@ -650,56 +629,57 @@ const EMPLOYERS = {
     textColor: 'white',
     icon: 'chef',
     tone: 'orange',
-    subtitle: 'Tipos de puestos',
-    employers: [
-      'Housekeeper',
-      'Mantenimiento',
-      'Lavandería',
-      'Kitchen Staff',
-      'Office Staff',
-    ],
   },
 };
 
-const Employers = ({ embedded = false }) => (
-  <section style={{ paddingTop: embedded ? 96 : 'calc(var(--header-h) + 96px)' }}>
-    <div className="container">
-      <div className="section-head">
-        <span className="eyebrow">Empleadores</span>
-        <h2>Empresas y campamentos <span className="text-blue">donde nuestros aplicantes trabajan en USA.</span></h2>
-        <p className="lead">Éstos son algunos de los empleadores campamentos y empresas con las que puedes trabajar.</p>
-      </div>
+const Employers = ({ embedded = false }) => {
+  const { t } = useLang();
+  const categoriesByKey = (t.employers && t.employers.categories) || {};
+  const subtitlesByKey = (t.employers && t.employers.subtitles) || {};
+  return (
+    <section style={{ paddingTop: embedded ? 96 : 'calc(var(--header-h) + 96px)' }}>
+      <div className="container">
+        <div className="section-head">
+          <span className="eyebrow">{t.employers.eyebrow}</span>
+          <h2>{t.employers.title1} <span className="text-blue">{t.employers.title2}</span></h2>
+          <p className="lead">{t.employers.desc}</p>
+        </div>
 
-      {Object.entries(EMPLOYERS).map(([key, prog]) => (
-        <div key={key} style={{ marginBottom: 80 }}>
-          {/* Program header */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 18, marginBottom: 32, paddingBottom: 20, borderBottom: '1px solid var(--line)' }}>
-            <div style={{ width: 60, height: 60, borderRadius: 16, background: prog.color, color: prog.textColor, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-              <Icon name={prog.icon} size={28} />
-            </div>
-            <div>
-              <span className="eyebrow">Programa</span>
-              <h3 style={{ marginTop: 4, fontSize: 26 }}>{prog.name}</h3>
-              {prog.subtitle && <div style={{ fontSize: 14, color: 'var(--ink-soft)', fontWeight: 600, marginTop: 2 }}>{prog.subtitle}</div>}
-            </div>
-          </div>
-
-          {/* Grid of categories */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 18 }} className="employers-grid">
-            {prog.employers.map((category, i) => (
-              <div key={i} className="card" style={{ overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-                <div style={{ aspectRatio: '1/1', backgroundColor: prog.color, backgroundImage: `url(assets/employers/${key}-${i + 1}.webp)`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
-                <div style={{ padding: '20px 16px', display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1, minHeight: 80 }}>
-                  <h4 style={{ fontSize: 17, fontWeight: 800, color: 'var(--ink)', textAlign: 'center', lineHeight: 1.3 }}>{category}</h4>
+        {Object.entries(EMPLOYERS).map(([key, prog]) => {
+          const categories = categoriesByKey[key] || [];
+          const subtitle = subtitlesByKey[key];
+          return (
+            <div key={key} style={{ marginBottom: 80 }}>
+              {/* Program header */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 18, marginBottom: 32, paddingBottom: 20, borderBottom: '1px solid var(--line)' }}>
+                <div style={{ width: 60, height: 60, borderRadius: 16, background: prog.color, color: prog.textColor, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <Icon name={prog.icon} size={28} />
+                </div>
+                <div>
+                  <span className="eyebrow">{t.employers.programLabel}</span>
+                  <h3 style={{ marginTop: 4, fontSize: 26 }}>{prog.name}</h3>
+                  {subtitle && <div style={{ fontSize: 14, color: 'var(--ink-soft)', fontWeight: 600, marginTop: 2 }}>{subtitle}</div>}
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-      ))}
-    </div>
-  </section>
-);
+
+              {/* Grid of categories */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 18 }} className="employers-grid">
+                {categories.map((category, i) => (
+                  <div key={i} className="card" style={{ overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+                    <div style={{ aspectRatio: '1/1', backgroundColor: prog.color, backgroundImage: `url(assets/employers/${key}-${i + 1}.webp)`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
+                    <div style={{ padding: '20px 16px', display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1, minHeight: 80 }}>
+                      <h4 style={{ fontSize: 17, fontWeight: 800, color: 'var(--ink)', textAlign: 'center', lineHeight: 1.3 }}>{category}</h4>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+};
 
 // Home: Hero + About + HasEmployer
 const Home = ({ navigate, openApply }) => (
