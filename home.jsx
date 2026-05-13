@@ -875,10 +875,27 @@ const Booking = () => {
     target.innerHTML = '';
     const baseUrl = window.getCalendlyUrl && window.getCalendlyUrl(selectedProgram);
     if (baseUrl && window.Calendly && window.Calendly.initInlineWidget) {
-      // Append query params to hide redundant details (already shown in the program card above)
-      // and the GDPR banner that takes vertical space.
-      const url = baseUrl + (baseUrl.includes('?') ? '&' : '?') + 'hide_event_type_details=1&hide_gdpr_banner=1';
-      window.Calendly.initInlineWidget({ url: url, parentElement: target, prefill: {}, utm: {} });
+      // Build URL with query params to hide redundant details, customize colors, and force Spanish
+      const params = [
+        'hide_event_type_details=1',
+        'hide_gdpr_banner=1',
+        'primary_color=196084',
+        'background_color=ffffff',
+        'text_color=0a1126',
+      ].join('&');
+      const url = baseUrl + (baseUrl.includes('?') ? '&' : '?') + params;
+      // Force a tall iframe so the calendar grid + time slots render fully without internal scroll
+      const isMobile = typeof window !== 'undefined' && window.innerWidth < 720;
+      window.Calendly.initInlineWidget({
+        url: url,
+        parentElement: target,
+        prefill: {},
+        utm: {},
+        styles: {
+          height: isMobile ? '1400px' : '1100px',
+          minWidth: '320px',
+        },
+      });
       setCalendlyReady(true);
     } else {
       // Placeholder while the URL is not configured or the widget script hasn't loaded yet
@@ -953,14 +970,13 @@ const Booking = () => {
 
         <CarouselDots count={BOOKING_PROGRAMS.length} activeIdx={activeIdx} onDotClick={scrollToCard} activeColor={dotsColor} ariaLabel={t.booking.title1} />
 
-        {/* Inline Calendly embed target. Stays empty until a program is selected. */}
+        {/* Inline Calendly embed target. The iframe inside has its own explicit height. */}
         <div
           id="calendly-inline-target"
           style={{
             marginTop: selectedProgram ? 48 : 0,
-            minHeight: selectedProgram ? 980 : 0,
             width: '100%',
-            transition: 'min-height 0.3s ease',
+            transition: 'margin 0.3s ease',
           }}
         />
       </div>
