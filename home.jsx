@@ -880,12 +880,67 @@ const Booking = () => {
       'text_color=0a1126',
     ].join('&');
     const url = baseUrl + (baseUrl.includes('?') ? '&' : '?') + params;
-    if (window.Calendly && window.Calendly.initPopupWidget) {
-      window.Calendly.initPopupWidget({ url: url });
-    } else {
+    if (!window.Calendly || !window.Calendly.initPopupWidget) {
       // Calendly script not loaded yet — open in new tab as fallback
       window.open(baseUrl, '_blank');
+      return;
     }
+    window.Calendly.initPopupWidget({ url: url });
+
+    // Inject a custom close button so the user can always dismiss the popup
+    // (Calendly's built-in close icon is sometimes hidden or hard to see).
+    setTimeout(() => {
+      if (document.getElementById('wice-calendly-close')) return;
+      const btn = document.createElement('button');
+      btn.id = 'wice-calendly-close';
+      btn.setAttribute('aria-label', 'Cerrar');
+      btn.innerHTML = '&times;';
+      Object.assign(btn.style, {
+        position: 'fixed',
+        top: '20px',
+        right: '20px',
+        width: '44px',
+        height: '44px',
+        borderRadius: '50%',
+        background: 'rgba(10, 17, 38, 0.85)',
+        color: 'white',
+        border: 'none',
+        fontSize: '28px',
+        fontWeight: '300',
+        lineHeight: '1',
+        cursor: 'pointer',
+        zIndex: '100000',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '0 0 4px 0',
+        boxShadow: '0 4px 14px rgba(0, 0, 0, 0.35)',
+        transition: 'transform 0.15s ease, background 0.15s ease',
+      });
+      btn.onmouseenter = () => {
+        btn.style.transform = 'scale(1.08)';
+        btn.style.background = 'rgba(10, 17, 38, 1)';
+      };
+      btn.onmouseleave = () => {
+        btn.style.transform = 'scale(1)';
+        btn.style.background = 'rgba(10, 17, 38, 0.85)';
+      };
+      btn.onclick = () => {
+        if (window.Calendly && window.Calendly.closePopupWidget) {
+          window.Calendly.closePopupWidget();
+        }
+        btn.remove();
+      };
+      document.body.appendChild(btn);
+
+      // Auto-remove the button if Calendly closes itself (after reservation or click outside)
+      const checkInterval = setInterval(() => {
+        if (!document.querySelector('.calendly-overlay')) {
+          btn.remove();
+          clearInterval(checkInterval);
+        }
+      }, 500);
+    }, 600);
   };
 
   const activeProgram = BOOKING_PROGRAMS[activeIdx] || BOOKING_PROGRAMS[0];
