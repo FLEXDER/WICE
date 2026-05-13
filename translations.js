@@ -228,6 +228,9 @@ window.TRANSLATIONS = {
       eyebrow: 'Proceso',
       title1: 'De la primera llamada a tu llegada',
       title2: 'en 6 pasos claros.',
+      ctaTitle: '¿Listo para arrancar?',
+      ctaDesc: 'Agenda tu asesoría inicial gratis. 20 minutos para resolver todas tus dudas.',
+      ctaButton: 'Agendar llamada',
       steps: [
         { t: 'Asesoría inicial', d: 'Llamada gratis para entender tu perfil, intereses y resolver dudas.' },
         { t: 'Elige programa', d: 'Te ayudamos a escoger el programa que mejor se adapta a tu momento.' },
@@ -281,10 +284,11 @@ window.TRANSLATIONS = {
       title1: 'Tu próxima aventura',
       title2: 'empieza con una llamada.',
       desc: 'Agenda una llamada informativa gratuita, donde te explicaremos los programas, costos y siguientes pasos en 20 minutos.',
+      scheduleCall: 'Agendar llamada',
       cards: [
         { t: 'Oficina', d: 'San Juan Bosco 3664, Col. Jardines de San Ignacio, Guadalajara, Jal.' },
         { t: 'Teléfono', d: '+52 33 2213 0778' },
-        { t: 'Correo', d: 'contacto@wice.com.mx' },
+        { t: 'Correo', d: 'contacto@wice.org.mx' },
       ],
     },
     hasEmployer: {
@@ -466,7 +470,7 @@ window.TRANSLATIONS = {
       fallbackProgram: 'tu programa',
       successMsg1: 'Tu aplicación llegó.',
       successMsg2: 'Te contactamos en menos de 48 horas para los siguientes pasos de',
-      errorTitle: 'Hubo un problema enviando tu aplicación. Inténtalo de nuevo o escríbenos a contacto@wice.com.mx',
+      errorTitle: 'Hubo un problema enviando tu aplicación. Inténtalo de nuevo o escríbenos a contacto@wice.org.mx',
       labels: {
         firstName: 'Nombre',
         lastName: 'Apellidos',
@@ -750,6 +754,9 @@ window.TRANSLATIONS = {
       eyebrow: 'Process',
       title1: 'From the first call to your arrival',
       title2: 'in 6 clear steps.',
+      ctaTitle: 'Ready to get started?',
+      ctaDesc: 'Book your free initial advising call. 20 minutes to clear up all your questions.',
+      ctaButton: 'Book a call',
       steps: [
         { t: 'Initial advising', d: 'Free call to understand your profile, interests and resolve any doubts.' },
         { t: 'Choose program', d: 'We help you pick the program that best fits your stage in life.' },
@@ -803,10 +810,11 @@ window.TRANSLATIONS = {
       title1: 'Your next adventure',
       title2: 'starts with a call.',
       desc: 'Book a free info call where we\'ll walk you through the programs, costs and next steps in 20 minutes.',
+      scheduleCall: 'Book a call',
       cards: [
         { t: 'Office', d: 'San Juan Bosco 3664, Col. Jardines de San Ignacio, Guadalajara, Jal.' },
         { t: 'Phone', d: '+52 33 2213 0778' },
-        { t: 'Email', d: 'contacto@wice.com.mx' },
+        { t: 'Email', d: 'contacto@wice.org.mx' },
       ],
     },
     hasEmployer: {
@@ -988,7 +996,7 @@ window.TRANSLATIONS = {
       fallbackProgram: 'your program',
       successMsg1: 'Your application is in.',
       successMsg2: 'We\'ll contact you within 48 hours for the next steps for',
-      errorTitle: 'There was a problem sending your application. Try again or write to us at contacto@wice.com.mx',
+      errorTitle: 'There was a problem sending your application. Try again or write to us at contacto@wice.org.mx',
       labels: {
         firstName: 'First name',
         lastName: 'Last name',
