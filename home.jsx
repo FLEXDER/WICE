@@ -873,13 +873,16 @@ const Booking = () => {
     const target = document.getElementById('calendly-inline-target');
     if (!target) return;
     target.innerHTML = '';
-    const url = window.getCalendlyUrl && window.getCalendlyUrl(selectedProgram);
-    if (url && window.Calendly && window.Calendly.initInlineWidget) {
+    const baseUrl = window.getCalendlyUrl && window.getCalendlyUrl(selectedProgram);
+    if (baseUrl && window.Calendly && window.Calendly.initInlineWidget) {
+      // Append query params to hide redundant details (already shown in the program card above)
+      // and the GDPR banner that takes vertical space.
+      const url = baseUrl + (baseUrl.includes('?') ? '&' : '?') + 'hide_event_type_details=1&hide_gdpr_banner=1';
       window.Calendly.initInlineWidget({ url: url, parentElement: target, prefill: {}, utm: {} });
       setCalendlyReady(true);
     } else {
       // Placeholder while the URL is not configured or the widget script hasn't loaded yet
-      target.innerHTML = '<div style="padding:60px 24px;text-align:center;color:var(--ink-soft);font-size:15px;line-height:1.6;">' + (url ? t.booking.loading : t.booking.notReady) + '</div>';
+      target.innerHTML = '<div style="padding:60px 24px;text-align:center;color:var(--ink-soft);font-size:15px;line-height:1.6;">' + (baseUrl ? t.booking.loading : t.booking.notReady) + '</div>';
       setCalendlyReady(false);
     }
     // Smooth scroll so the user sees the calendar
@@ -955,10 +958,8 @@ const Booking = () => {
           id="calendly-inline-target"
           style={{
             marginTop: selectedProgram ? 48 : 0,
-            minHeight: selectedProgram ? 720 : 0,
-            borderRadius: 'var(--radius)',
-            overflow: 'hidden',
-            background: selectedProgram ? 'var(--bg-soft)' : 'transparent',
+            minHeight: selectedProgram ? 980 : 0,
+            width: '100%',
             transition: 'min-height 0.3s ease',
           }}
         />
