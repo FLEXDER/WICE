@@ -117,6 +117,9 @@ const Icon = ({ name, size = 20, stroke = 2 }) => {
     flag: <><path d="M4 22V4M4 4h13l-2 4 2 4H4"/></>,
     chef: <><path d="M7 21h10"/><path d="M19.5 12a3.5 3.5 0 0 0-3.5-3.5 4 4 0 0 0-8 0A3.5 3.5 0 0 0 4.5 12c0 1.5 1 3 2.5 3.5V21h10v-5.5c1.5-.5 2.5-2 2.5-3.5z"/></>,
     whatsapp: <><path d="M16.6 14c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1-.7-.3-1.4-.7-2-1.2-.5-.5-1-1.1-1.4-1.7-.1-.2 0-.4.1-.5.1-.1.2-.3.4-.4.1-.1.2-.3.2-.4.1-.1.1-.3 0-.4-.1-.1-.6-1.3-.8-1.8-.1-.7-.3-.7-.5-.7h-.5c-.2 0-.5.2-.6.3-.6.6-.9 1.3-.9 2.1.1.9.4 1.8 1 2.6 1.1 1.6 2.5 2.9 4.2 3.7.5.2.9.4 1.4.5.5.2 1 .2 1.6.1.7-.1 1.3-.6 1.7-1.2.2-.4.2-.8.1-1.2 0-.2-.2-.2-.4-.3z"/><path d="M20.5 3.4A12 12 0 0 0 2.1 17.7L1 22l4.5-1.1A12 12 0 0 0 11.5 22h.1a12 12 0 0 0 8.4-3.5 12 12 0 0 0 .5-15.1zM12 20a10 10 0 0 1-5.1-1.4l-.4-.2-3 .8.8-3-.2-.3a10 10 0 0 1 7.7-15.1A10 10 0 0 1 22 11a10 10 0 0 1-10 9z"/></>,
+    clock: <><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></>,
+    users: <><path d="M16 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/><path d="M8 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/><path d="M2 21v-2a4 4 0 0 1 3-3.9"/><path d="M22 21v-2a4 4 0 0 0-3-3.9"/><path d="M8 21v-2a4 4 0 0 1 4-4 4 4 0 0 1 4 4v2"/></>,
+    calendar: <><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/></>,
   };
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={stroke} strokeLinecap="round" strokeLinejoin="round">
@@ -173,6 +176,7 @@ const Header = ({ route, navigate, openApply }) => {
     { id: 'employers', label: t.nav.employers },
     { id: 'visa', label: t.nav.visa },
     { id: 'process', label: t.nav.process },
+    { id: 'booking', label: t.nav.booking },
     { id: 'team', label: t.nav.team },
     { id: 'faq', label: t.nav.faq },
     { id: 'contact', label: t.nav.contact },
