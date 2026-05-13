@@ -29,6 +29,7 @@ window.TRANSLATIONS = {
       employers: 'Empleadores',
       visa: 'Visa J1',
       process: 'Proceso',
+      booking: 'Agendar',
       team: 'Equipo',
       faq: 'FAQ',
       contact: 'Contacto',
@@ -372,6 +373,32 @@ window.TRANSLATIONS = {
       copyright: '© 2026 WICE MX. Todos los derechos reservados.',
       slogan: 'We Inspire Cultural Exchange',
     },
+    booking: {
+      eyebrow: 'Agendar',
+      title1: 'Agenda tu llamada informativa',
+      title2: 'gratis.',
+      desc: 'Elige el programa que más te interese y reserva un horario disponible. Las llamadas son grupales de 30 minutos con máximo 5 personas por sesión.',
+      duration: '30 min',
+      capacity: 'Hasta 5 personas',
+      viewSlots: 'Ver horarios disponibles',
+      selected: 'Cargando horarios...',
+      notReady: 'Estamos terminando de configurar los horarios para este programa. Vuelve a intentarlo pronto o escríbenos por WhatsApp.',
+      loading: 'Cargando calendario...',
+      programs: {
+        swt: {
+          desc: 'Trabaja legalmente en USA durante tu verano universitario y conoce gente de todo el mundo.',
+        },
+        camp: {
+          desc: 'Counselor o staff en campamentos de verano. Liderazgo, comunidad y naturaleza al aire libre.',
+        },
+        intern: {
+          desc: 'Realiza tus prácticas profesionales en empresas reales en Estados Unidos en tu área de estudio.',
+        },
+        support: {
+          desc: 'Trabaja en cocina, mantenimiento o limpieza en campamentos. Conoce personas de todo el mundo.',
+        },
+      },
+    },
     terms: {
       eyebrow: 'Términos y condiciones',
       title1: 'Términos y',
@@ -555,6 +582,7 @@ window.TRANSLATIONS = {
       employers: 'Employers',
       visa: 'J1 Visa',
       process: 'Process',
+      booking: 'Book a call',
       team: 'Team',
       faq: 'FAQ',
       contact: 'Contact',
@@ -897,6 +925,32 @@ window.TRANSLATIONS = {
       address: 'San Juan Bosco 3664\nCol. Jardines de San Ignacio\nGuadalajara, Jal.',
       copyright: '© 2026 WICE MX. All rights reserved.',
       slogan: 'We Inspire Cultural Exchange',
+    },
+    booking: {
+      eyebrow: 'Book a call',
+      title1: 'Book your free',
+      title2: 'info call.',
+      desc: 'Pick the program that interests you most and reserve an available slot. Calls are group sessions of 30 minutes with up to 5 people per session.',
+      duration: '30 min',
+      capacity: 'Up to 5 people',
+      viewSlots: 'See available times',
+      selected: 'Loading times...',
+      notReady: 'We are still setting up the schedule for this program. Try again soon or reach out on WhatsApp.',
+      loading: 'Loading calendar...',
+      programs: {
+        swt: {
+          desc: 'Work legally in the US during your university summer and meet people from around the world.',
+        },
+        camp: {
+          desc: 'Counselor or staff at summer camps. Leadership, community and outdoor life.',
+        },
+        intern: {
+          desc: 'Do your professional internship at real companies in the US within your field of study.',
+        },
+        support: {
+          desc: 'Work in kitchen, maintenance or housekeeping at camps. Meet people from all over the world.',
+        },
+      },
     },
     terms: {
       eyebrow: 'Terms and conditions',
