@@ -724,9 +724,9 @@ const Booking = () => {
     <section style={{ paddingTop: 'calc(var(--header-h) + 96px)', paddingBottom: 96 }}>
       <div className="container">
         <div className="section-head" style={{ textAlign: 'center' }}>
-          <span className="eyebrow">{t.booking.eyebrow}</span>
-          <h2>{t.booking.title1} <span className="text-blue">{t.booking.title2}</span></h2>
-          <p className="lead" style={{ margin: '16px auto 0', maxWidth: 620 }}>{t.booking.desc}</p>
+          <span className="eyebrow" style={{ display: 'block', textAlign: 'center' }}>{t.booking.eyebrow}</span>
+          <h2 style={{ textAlign: 'center', maxWidth: 760, margin: '12px auto 0' }}>{t.booking.title1} <span className="text-blue">{t.booking.title2}</span></h2>
+          <p className="lead" style={{ textAlign: 'center', margin: '16px auto 0', maxWidth: 620 }}>{t.booking.desc}</p>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 20, marginTop: 48 }} className="booking-grid">
