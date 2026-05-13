@@ -1,5 +1,68 @@
 // Home + section pages — WICE MX
 
+// ============================================================
+// Shared helpers — mobile carousel tracking with dot indicators
+// ============================================================
+const useCarouselTracker = (ref, count) => {
+  const [activeIdx, setActiveIdx] = React.useState(0);
+  const [isCarousel, setIsCarousel] = React.useState(false);
+
+  React.useEffect(() => {
+    const el = ref && ref.current;
+    if (!el) return;
+    const check = () => setIsCarousel(el.scrollWidth > el.clientWidth + 4);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, [count]);
+
+  const handleScroll = () => {
+    const el = ref && ref.current;
+    if (!el || !isCarousel || !el.children.length) return;
+    const firstCard = el.children[0];
+    const step = firstCard.offsetWidth + 14;
+    const idx = Math.round(el.scrollLeft / step);
+    const clamped = Math.max(0, Math.min(idx, count - 1));
+    setActiveIdx((prev) => (prev === clamped ? prev : clamped));
+  };
+
+  const scrollToCard = (i) => {
+    const el = ref && ref.current;
+    if (!el || !el.children[i]) return;
+    el.children[i].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+  };
+
+  return { activeIdx, isCarousel, handleScroll, scrollToCard };
+};
+
+const CarouselDots = ({ count, activeIdx, onDotClick, activeColor = 'var(--blue)', ariaLabel = 'Slides' }) => (
+  <div className="carousel-dots" role="tablist" aria-label={ariaLabel}>
+    {Array.from({ length: count }).map((_, i) => {
+      const active = i === activeIdx;
+      return (
+        <button
+          key={i}
+          type="button"
+          role="tab"
+          aria-selected={active}
+          aria-label={'Ir al slide ' + (i + 1)}
+          onClick={() => onDotClick(i)}
+          style={{
+            width: active ? 28 : 8,
+            height: 8,
+            borderRadius: 4,
+            border: 'none',
+            background: active ? activeColor : 'var(--line)',
+            cursor: 'pointer',
+            transition: 'all 0.3s ease',
+            padding: 0,
+          }}
+        />
+      );
+    })}
+  </div>
+);
+
 const Stat = ({ num, label, suffix = '', prefix = '' }) => (
   <div>
     <div style={{ fontSize: 'clamp(40px, 5vw, 64px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1, color: 'var(--blue)' }}>
@@ -143,6 +206,8 @@ const PROGRAMS = [
 const Programs = ({ navigate, openApply, embedded = false }) => {
   const { t } = useLang();
   const items = (t.programs && t.programs.items) || {};
+  const scrollRef = React.useRef(null);
+  const { activeIdx, handleScroll, scrollToCard } = useCarouselTracker(scrollRef, PROGRAMS.length);
   return (
   <section id="programs" style={{ paddingTop: embedded ? 96 : 'calc(var(--header-h) + 96px)' }}>
     <div className="container">
@@ -151,7 +216,12 @@ const Programs = ({ navigate, openApply, embedded = false }) => {
         <h2>{t.programs.title1} <span className="text-blue">{t.programs.title2}</span></h2>
         <p className="lead">{t.programs.desc}</p>
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 20 }} className="programs-grid">
+      <div
+        ref={scrollRef}
+        onScroll={handleScroll}
+        style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 20 }}
+        className="programs-grid"
+      >
         {PROGRAMS.map((p) => {
           const tr = items[p.id] || {};
           return (
@@ -179,6 +249,7 @@ const Programs = ({ navigate, openApply, embedded = false }) => {
           );
         })}
       </div>
+      <CarouselDots count={PROGRAMS.length} activeIdx={activeIdx} onDotClick={scrollToCard} ariaLabel={t.programs.title1} />
     </div>
   </section>
   );
@@ -449,6 +520,8 @@ const HasEmployer = () => {
     { icon: 'tent', bg: '#a7d99f', phone: '525653914459' },
   ];
   const cards = (t.hasEmployer && t.hasEmployer.cards) || [];
+  const scrollRef = React.useRef(null);
+  const { activeIdx, handleScroll, scrollToCard } = useCarouselTracker(scrollRef, meta.length);
   return (
     <section style={{ paddingTop: 96, paddingBottom: 96 }}>
       <div className="container">
@@ -456,7 +529,12 @@ const HasEmployer = () => {
           <h2>{t.hasEmployer.title1} <span className="text-blue">{t.hasEmployer.title2}</span></h2>
           <p className="lead">{t.hasEmployer.desc}</p>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }} className="programs-grid">
+        <div
+          ref={scrollRef}
+          onScroll={handleScroll}
+          style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}
+          className="programs-grid"
+        >
           {meta.map((m, i) => {
             const c = cards[i] || {};
             return (
@@ -482,6 +560,7 @@ const HasEmployer = () => {
             );
           })}
         </div>
+        <CarouselDots count={meta.length} activeIdx={activeIdx} onDotClick={scrollToCard} ariaLabel={t.hasEmployer.title1} />
       </div>
     </section>
   );
