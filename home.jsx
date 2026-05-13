@@ -626,6 +626,102 @@ const EMPLOYERS = {
   },
 };
 
+// Group of employers per program (renders as grid on desktop, swipeable carousel + dots on mobile)
+const EmployerGroup = ({ programKey, prog, categories, subtitle, label }) => {
+  const scrollRef = React.useRef(null);
+  const [activeIdx, setActiveIdx] = React.useState(0);
+  const [isCarousel, setIsCarousel] = React.useState(false);
+
+  // Detect whether we're rendering in carousel mode (mobile) or grid (desktop)
+  React.useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const check = () => {
+      // In carousel mode the container overflows horizontally
+      setIsCarousel(el.scrollWidth > el.clientWidth + 4);
+    };
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, [categories.length]);
+
+  const handleScroll = () => {
+    const el = scrollRef.current;
+    if (!el || !isCarousel || !el.children.length) return;
+    const firstCard = el.children[0];
+    const step = firstCard.offsetWidth + 14; // card width + mobile gap
+    const idx = Math.round(el.scrollLeft / step);
+    const clamped = Math.max(0, Math.min(idx, categories.length - 1));
+    setActiveIdx((prev) => (prev === clamped ? prev : clamped));
+  };
+
+  const scrollToCard = (i) => {
+    const el = scrollRef.current;
+    if (!el || !el.children[i]) return;
+    el.children[i].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+  };
+
+  return (
+    <div style={{ marginBottom: 80 }}>
+      {/* Program header */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 18, marginBottom: 32, paddingBottom: 20, borderBottom: '1px solid var(--line)' }}>
+        <div style={{ width: 60, height: 60, borderRadius: 16, background: prog.color, color: prog.textColor, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+          <Icon name={prog.icon} size={28} />
+        </div>
+        <div>
+          <span className="eyebrow">{label}</span>
+          <h3 style={{ marginTop: 4, fontSize: 26 }}>{prog.name}</h3>
+          {subtitle && <div style={{ fontSize: 14, color: 'var(--ink-soft)', fontWeight: 600, marginTop: 2 }}>{subtitle}</div>}
+        </div>
+      </div>
+
+      {/* Cards: CSS converts this from grid to swipeable carousel on mobile */}
+      <div
+        ref={scrollRef}
+        onScroll={handleScroll}
+        className="employers-grid"
+        style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 18 }}
+      >
+        {categories.map((category, i) => (
+          <div key={i} className="card" style={{ overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+            <div style={{ aspectRatio: '1/1', backgroundColor: prog.color, backgroundImage: `url(assets/employers/${programKey}-${i + 1}.webp)`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
+            <div style={{ padding: '20px 16px', display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1, minHeight: 80 }}>
+              <h4 style={{ fontSize: 17, fontWeight: 800, color: 'var(--ink)', textAlign: 'center', lineHeight: 1.3 }}>{category}</h4>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Dots indicator — only visible in mobile (CSS controls display) */}
+      <div className="carousel-dots" role="tablist" aria-label={prog.name}>
+        {categories.map((_, i) => {
+          const active = i === activeIdx;
+          return (
+            <button
+              key={i}
+              type="button"
+              role="tab"
+              aria-selected={active}
+              aria-label={'Ir al slide ' + (i + 1)}
+              onClick={() => scrollToCard(i)}
+              style={{
+                width: active ? 28 : 8,
+                height: 8,
+                borderRadius: 4,
+                border: 'none',
+                background: active ? prog.color : 'var(--line)',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                padding: 0,
+              }}
+            />
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
 const Employers = ({ embedded = false }) => {
   const { t } = useLang();
   const categoriesByKey = (t.employers && t.employers.categories) || {};
@@ -643,31 +739,14 @@ const Employers = ({ embedded = false }) => {
           const categories = categoriesByKey[key] || [];
           const subtitle = subtitlesByKey[key];
           return (
-            <div key={key} style={{ marginBottom: 80 }}>
-              {/* Program header */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: 18, marginBottom: 32, paddingBottom: 20, borderBottom: '1px solid var(--line)' }}>
-                <div style={{ width: 60, height: 60, borderRadius: 16, background: prog.color, color: prog.textColor, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                  <Icon name={prog.icon} size={28} />
-                </div>
-                <div>
-                  <span className="eyebrow">{t.employers.programLabel}</span>
-                  <h3 style={{ marginTop: 4, fontSize: 26 }}>{prog.name}</h3>
-                  {subtitle && <div style={{ fontSize: 14, color: 'var(--ink-soft)', fontWeight: 600, marginTop: 2 }}>{subtitle}</div>}
-                </div>
-              </div>
-
-              {/* Grid of categories */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 18 }} className="employers-grid">
-                {categories.map((category, i) => (
-                  <div key={i} className="card" style={{ overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-                    <div style={{ aspectRatio: '1/1', backgroundColor: prog.color, backgroundImage: `url(assets/employers/${key}-${i + 1}.webp)`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
-                    <div style={{ padding: '20px 16px', display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1, minHeight: 80 }}>
-                      <h4 style={{ fontSize: 17, fontWeight: 800, color: 'var(--ink)', textAlign: 'center', lineHeight: 1.3 }}>{category}</h4>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <EmployerGroup
+              key={key}
+              programKey={key}
+              prog={prog}
+              categories={categories}
+              subtitle={subtitle}
+              label={t.employers.programLabel}
+            />
           );
         })}
       </div>
