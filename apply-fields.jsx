@@ -236,7 +236,7 @@ const TermsCheckbox = ({ checked, onChange, error }) => {
         />
         <span style={{ fontSize: 13, color: 'var(--ink)', lineHeight: 1.5 }}>
           {t.apply.labels.terms}{' '}
-          <a href="terminos-y-condiciones.html" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--blue)', textDecoration: 'underline', fontWeight: 700 }}>
+          <a href="terminos/" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--blue)', textDecoration: 'underline', fontWeight: 700 }}>
             {t.apply.labels.termsLink}
           </a>
           .
