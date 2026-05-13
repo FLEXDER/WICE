@@ -331,7 +331,13 @@ window.TRANSLATIONS = {
           'Camp Niños Bajos Recursos',
           'Camp Niños Necesidades Especiales',
         ],
-        intern: ['Vacantes de gastronomía y turismo'],
+        intern: [
+          'Practicante de Arquitectura',
+          'Practicante de Marketing',
+          'Practicante de Cocina',
+          'Practicante de Operaciones Hoteleras',
+          'Practicante de Hospitalidad',
+        ],
         support: [
           'Housekeeper',
           'Mantenimiento',
@@ -847,7 +853,13 @@ window.TRANSLATIONS = {
           'Low-Income Youth Camps',
           'Special Needs Camps',
         ],
-        intern: ['Hospitality and tourism positions'],
+        intern: [
+          'Architecture Intern',
+          'Marketing Intern',
+          'Culinary Intern',
+          'Hotel Operations Intern',
+          'Hospitality Intern',
+        ],
         support: [
           'Housekeeper',
           'Maintenance',
