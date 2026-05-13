@@ -73,6 +73,11 @@
       "Support Staff Program",
       "Bridge USA"
     ],
+    "sameAs": [
+      "https://www.instagram.com/wice_orgmx/",
+      "https://www.facebook.com/share/1cFK2QeUCd/",
+      "https://www.linkedin.com/company/ice-international-cultural-exchange/"
+    ],
     "contactPoint": {
       "@type": "ContactPoint",
       "telephone": "+52-33-2213-0778",
@@ -271,6 +276,120 @@
         scroll-padding-left: 20px;
       }
     }
+
+    /* ============================================================
+       COOKIE CONSENT BANNER
+       Loads before React. Bilingual via navigator.language.
+       Decision is stored in localStorage so it never shows again.
+       ============================================================ */
+    #wice-cookies {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      width: calc(100% - 32px);
+      max-width: 520px;
+      background: #ffffff;
+      border: 1px solid #e6edf4;
+      border-radius: 18px;
+      padding: 22px 24px 20px;
+      box-shadow: 0 20px 50px -10px rgba(10, 17, 38, 0.18), 0 4px 14px rgba(10, 17, 38, 0.08);
+      font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
+      z-index: 2147483646;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #wice-cookies.is-visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+      pointer-events: auto;
+    }
+    #wice-cookies .cookie-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    #wice-cookies .cookie-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: rgba(25, 96, 132, 0.1);
+      color: #196084;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    #wice-cookies .cookie-icon svg { width: 20px; height: 20px; }
+    #wice-cookies h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0a1126;
+      margin: 0;
+      letter-spacing: -0.2px;
+    }
+    #wice-cookies p {
+      font-size: 13px;
+      line-height: 1.55;
+      color: #4a5468;
+      margin: 0 0 16px 0;
+    }
+    #wice-cookies a.cookie-link {
+      color: #196084;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      font-weight: 500;
+    }
+    #wice-cookies .cookie-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #wice-cookies button {
+      flex: 1;
+      min-width: 0;
+      padding: 11px 16px;
+      border-radius: 100px;
+      border: 1px solid transparent;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.1px;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+      white-space: nowrap;
+    }
+    #wice-cookies button.cookie-primary {
+      background: #0a1126;
+      color: #ffffff;
+    }
+    #wice-cookies button.cookie-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(10, 17, 38, 0.22);
+    }
+    #wice-cookies button.cookie-secondary {
+      background: #ffffff;
+      color: #0a1126;
+      border-color: #e6edf4;
+    }
+    #wice-cookies button.cookie-secondary:hover {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+    }
+    @media (max-width: 480px) {
+      #wice-cookies {
+        bottom: 16px;
+        width: calc(100% - 24px);
+        padding: 18px 20px 16px;
+        border-radius: 16px;
+      }
+      #wice-cookies h3 { font-size: 14px; }
+      #wice-cookies p { font-size: 12px; }
+      #wice-cookies button { font-size: 12px; padding: 10px 14px; }
+    }
   </style>
 </head>
 <body>
@@ -368,5 +487,101 @@
       </ErrorBoundary>
     );
   </script>
+  <!-- ============================================================
+       COOKIE CONSENT BANNER
+       Loads instantly (no React dependency). Auto-detects language
+       from <html lang>, browser, or saved preference. Shows once.
+       ============================================================ -->
+  <div id="wice-cookies" role="dialog" aria-live="polite" aria-label="Aviso de cookies">
+    <div class="cookie-head">
+      <div class="cookie-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2a10 10 0 1 0 10 10c0-.5-.04-1-.1-1.5a4 4 0 0 1-5.4-5.4A10 10 0 0 0 12 2z"/>
+          <circle cx="8.5" cy="10.5" r="0.5" fill="currentColor"/>
+          <circle cx="15" cy="14" r="0.5" fill="currentColor"/>
+          <circle cx="10" cy="15.5" r="0.5" fill="currentColor"/>
+        </svg>
+      </div>
+      <h3 id="wice-cookies-title">Usamos cookies</h3>
+    </div>
+    <p id="wice-cookies-body">
+      Utilizamos cookies para mejorar tu experiencia, recordar tus preferencias y entender cómo usas el sitio. Puedes aceptar todas o solo permitir las esenciales. <a href="/privacidad" class="cookie-link" id="wice-cookies-link">Más información</a>.
+    </p>
+    <div class="cookie-actions">
+      <button type="button" class="cookie-secondary" id="wice-cookies-essential">Solo necesarias</button>
+      <button type="button" class="cookie-primary"   id="wice-cookies-accept">Aceptar todas</button>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      // Bail out if user has already chosen (decision is permanent until they clear storage)
+      try {
+        if (localStorage.getItem('wice-cookies-consent')) return;
+      } catch (e) { /* localStorage blocked, show banner anyway */ }
+
+      // Detect language: explicit lang attr → saved site lang → browser language
+      var lang = 'es';
+      try {
+        var htmlLang = document.documentElement.lang || '';
+        var savedLang = localStorage.getItem('wice-lang') || '';
+        var navLang = (navigator.language || navigator.userLanguage || 'es').toLowerCase();
+        if (savedLang === 'en') lang = 'en';
+        else if (savedLang === 'es') lang = 'es';
+        else if (htmlLang.toLowerCase().indexOf('en') === 0) lang = 'en';
+        else if (navLang.indexOf('es') !== 0) lang = 'en';
+      } catch (e) { /* default to es */ }
+
+      var copy = {
+        es: {
+          title: 'Usamos cookies',
+          bodyA: 'Utilizamos cookies para mejorar tu experiencia, recordar tus preferencias y entender cómo usas el sitio. Puedes aceptar todas o solo permitir las esenciales.',
+          link: 'Más información',
+          essential: 'Solo necesarias',
+          accept: 'Aceptar todas'
+        },
+        en: {
+          title: 'We use cookies',
+          bodyA: 'We use cookies to improve your experience, remember your preferences, and understand how you use the site. You can accept all or only allow the essential ones.',
+          link: 'Learn more',
+          essential: 'Only essential',
+          accept: 'Accept all'
+        }
+      };
+      var t = copy[lang];
+
+      var el     = document.getElementById('wice-cookies');
+      var title  = document.getElementById('wice-cookies-title');
+      var body   = document.getElementById('wice-cookies-body');
+      var link   = document.getElementById('wice-cookies-link');
+      var btnEss = document.getElementById('wice-cookies-essential');
+      var btnAll = document.getElementById('wice-cookies-accept');
+
+      title.textContent  = t.title;
+      // Rebuild body so the link stays clickable after text swap
+      body.innerHTML = t.bodyA + ' <a href="/privacidad" class="cookie-link">' + t.link + '</a>.';
+      btnEss.textContent = t.essential;
+      btnAll.textContent = t.accept;
+
+      function dismiss(choice) {
+        try { localStorage.setItem('wice-cookies-consent', choice); } catch (e) {}
+        try { localStorage.setItem('wice-cookies-consent-date', new Date().toISOString()); } catch (e) {}
+        el.classList.remove('is-visible');
+        // Remove from DOM after the fade-out finishes
+        setTimeout(function () { if (el && el.parentNode) el.parentNode.removeChild(el); }, 500);
+        // Dispatch a custom event so the rest of the app (e.g. analytics) can react
+        try {
+          window.dispatchEvent(new CustomEvent('wice-cookies-consent', { detail: { choice: choice } }));
+        } catch (e) {}
+      }
+
+      btnAll.addEventListener('click', function () { dismiss('all'); });
+      btnEss.addEventListener('click', function () { dismiss('essential'); });
+
+      // Show the banner ~1.4s after the page loads (gives the hero a moment to settle)
+      setTimeout(function () { el.classList.add('is-visible'); }, 1400);
+    })();
+  </script>
+
 </body>
 </html>
