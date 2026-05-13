@@ -862,55 +862,33 @@ const BOOKING_PROGRAMS = [
 
 const Booking = () => {
   const { t } = useLang();
-  const [selectedProgram, setSelectedProgram] = React.useState(null);
-  const [calendlyReady, setCalendlyReady] = React.useState(false);
   const scrollRef = React.useRef(null);
   const { activeIdx, handleScroll, scrollToCard } = useCarouselTracker(scrollRef, BOOKING_PROGRAMS.length);
 
-  // When user picks a program, mount the Calendly inline widget in the embed container
-  React.useEffect(() => {
-    if (!selectedProgram) return;
-    const target = document.getElementById('calendly-inline-target');
-    if (!target) return;
-    target.innerHTML = '';
-    const baseUrl = window.getCalendlyUrl && window.getCalendlyUrl(selectedProgram);
-    if (baseUrl && window.Calendly && window.Calendly.initInlineWidget) {
-      // Build URL with query params to hide redundant details, customize colors, and force Spanish
-      const params = [
-        'hide_event_type_details=1',
-        'hide_gdpr_banner=1',
-        'primary_color=196084',
-        'background_color=ffffff',
-        'text_color=0a1126',
-      ].join('&');
-      const url = baseUrl + (baseUrl.includes('?') ? '&' : '?') + params;
-      // Force a tall iframe so the calendar grid + time slots render fully without internal scroll
-      const isMobile = typeof window !== 'undefined' && window.innerWidth < 720;
-      window.Calendly.initInlineWidget({
-        url: url,
-        parentElement: target,
-        prefill: {},
-        utm: {},
-        styles: {
-          height: isMobile ? '1400px' : '1100px',
-          minWidth: '320px',
-        },
-      });
-      setCalendlyReady(true);
-    } else {
-      // Placeholder while the URL is not configured or the widget script hasn't loaded yet
-      target.innerHTML = '<div style="padding:60px 24px;text-align:center;color:var(--ink-soft);font-size:15px;line-height:1.6;">' + (baseUrl ? t.booking.loading : t.booking.notReady) + '</div>';
-      setCalendlyReady(false);
+  const openCalendly = (programId) => {
+    const baseUrl = window.getCalendlyUrl && window.getCalendlyUrl(programId);
+    if (!baseUrl) {
+      alert(t.booking.notReady);
+      return;
     }
-    // Smooth scroll so the user sees the calendar
-    setTimeout(function () {
-      try { target.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch (e) { /* no-op */ }
-    }, 120);
-  }, [selectedProgram]);
+    // Build URL with query params to customize the popup
+    const params = [
+      'hide_event_type_details=1',
+      'hide_gdpr_banner=1',
+      'primary_color=196084',
+      'background_color=ffffff',
+      'text_color=0a1126',
+    ].join('&');
+    const url = baseUrl + (baseUrl.includes('?') ? '&' : '?') + params;
+    if (window.Calendly && window.Calendly.initPopupWidget) {
+      window.Calendly.initPopupWidget({ url: url });
+    } else {
+      // Calendly script not loaded yet — open in new tab as fallback
+      window.open(baseUrl, '_blank');
+    }
+  };
 
-  // Active color for dots matches the currently-viewed card's program color
   const activeProgram = BOOKING_PROGRAMS[activeIdx] || BOOKING_PROGRAMS[0];
-  const dotsColor = (selectedProgram && BOOKING_PROGRAMS.find(p => p.id === selectedProgram)?.color) || activeProgram.color;
 
   return (
     <section style={{ paddingTop: 'calc(var(--header-h) + 96px)', paddingBottom: 96 }}>
@@ -929,16 +907,14 @@ const Booking = () => {
         >
           {BOOKING_PROGRAMS.map((p) => {
             const trp = (t.booking.programs && t.booking.programs[p.id]) || {};
-            const isSelected = selectedProgram === p.id;
             return (
               <button
                 key={p.id}
                 type="button"
-                onClick={() => setSelectedProgram(p.id)}
-                aria-pressed={isSelected}
+                onClick={() => openCalendly(p.id)}
                 style={{
                   background: 'white',
-                  border: isSelected ? '2px solid var(--blue)' : '1px solid var(--line)',
+                  border: '1px solid var(--line)',
                   borderRadius: 'var(--radius)',
                   padding: 24,
                   textAlign: 'left',
@@ -946,9 +922,16 @@ const Booking = () => {
                   display: 'flex',
                   flexDirection: 'column',
                   transition: 'all 0.2s ease',
-                  boxShadow: isSelected ? '0 8px 24px rgba(25, 96, 132, 0.15)' : 'var(--shadow)',
-                  transform: isSelected ? 'translateY(-2px)' : 'translateY(0)',
+                  boxShadow: 'var(--shadow)',
                   fontFamily: 'inherit',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-4px)';
+                  e.currentTarget.style.boxShadow = '0 12px 28px rgba(25, 96, 132, 0.15)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = 'var(--shadow)';
                 }}
               >
                 <div style={{ width: 52, height: 52, borderRadius: 14, background: p.color, color: p.textColor, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 18 }}>
@@ -961,24 +944,14 @@ const Booking = () => {
                   <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><Icon name="users" size={13} /> {t.booking.capacity}</span>
                 </div>
                 <div className="btn btn-blue" style={{ width: '100%', justifyContent: 'center', padding: '12px', fontSize: 13, marginTop: 'auto', pointerEvents: 'none' }}>
-                  {isSelected ? t.booking.selected : t.booking.viewSlots} <Icon name="arrow" size={14} />
+                  {t.booking.viewSlots} <Icon name="arrow" size={14} />
                 </div>
               </button>
             );
           })}
         </div>
 
-        <CarouselDots count={BOOKING_PROGRAMS.length} activeIdx={activeIdx} onDotClick={scrollToCard} activeColor={dotsColor} ariaLabel={t.booking.title1} />
-
-        {/* Inline Calendly embed target. The iframe inside has its own explicit height. */}
-        <div
-          id="calendly-inline-target"
-          style={{
-            marginTop: selectedProgram ? 48 : 0,
-            width: '100%',
-            transition: 'margin 0.3s ease',
-          }}
-        />
+        <CarouselDots count={BOOKING_PROGRAMS.length} activeIdx={activeIdx} onDotClick={scrollToCard} activeColor={activeProgram.color} ariaLabel={t.booking.title1} />
       </div>
     </section>
   );
