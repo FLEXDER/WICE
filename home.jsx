@@ -887,82 +887,89 @@ const Booking = () => {
     }
     window.Calendly.initPopupWidget({ url: url });
 
-    // Wait for Calendly's popup element to mount, then anchor a close button to its
-    // top-right corner. The button is positioned with getBoundingClientRect so it
-    // visually "belongs" to the popup instead of floating in the viewport corner.
-    let attempts = 0;
-    const waitForPopup = setInterval(() => {
-      attempts += 1;
-      const overlay = document.querySelector('.calendly-overlay');
-      const popup = overlay && overlay.querySelector('.calendly-popup');
-      if (popup) {
-        clearInterval(waitForPopup);
-        if (document.getElementById('wice-calendly-close')) return;
+    // Wait ~900ms before showing our close button so it doesn't pop in before
+    // Calendly's content has rendered. After the delay, actively wait for the
+    // popup element to mount, then fade the button in.
+    setTimeout(() => {
+      let attempts = 0;
+      const waitForPopup = setInterval(() => {
+        attempts += 1;
+        const overlay = document.querySelector('.calendly-overlay');
+        const popup = overlay && overlay.querySelector('.calendly-popup');
+        if (popup) {
+          clearInterval(waitForPopup);
+          if (document.getElementById('wice-calendly-close')) return;
 
-        const btn = document.createElement('button');
-        btn.id = 'wice-calendly-close';
-        btn.setAttribute('aria-label', 'Cerrar');
-        btn.innerHTML = '&times;';
-        Object.assign(btn.style, {
-          position: 'fixed',
-          width: '40px',
-          height: '40px',
-          borderRadius: '50%',
-          background: '#0a1126',
-          color: 'white',
-          border: '2px solid white',
-          fontSize: '22px',
-          fontWeight: '400',
-          lineHeight: '1',
-          cursor: 'pointer',
-          zIndex: '2147483647',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '0 0 3px 0',
-          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.4)',
-          transition: 'transform 0.15s ease',
-        });
+          const btn = document.createElement('button');
+          btn.id = 'wice-calendly-close';
+          btn.setAttribute('aria-label', 'Cerrar');
+          btn.innerHTML = '&times;';
+          Object.assign(btn.style, {
+            position: 'fixed',
+            width: '40px',
+            height: '40px',
+            borderRadius: '50%',
+            background: '#0a1126',
+            color: 'white',
+            border: '2px solid white',
+            fontSize: '22px',
+            fontWeight: '400',
+            lineHeight: '1',
+            cursor: 'pointer',
+            zIndex: '2147483647',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '0 0 3px 0',
+            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.4)',
+            opacity: '0',
+            transition: 'opacity 0.3s ease, transform 0.15s ease',
+          });
 
-        const reposition = () => {
-          if (!btn.isConnected || !popup.isConnected) return;
-          const rect = popup.getBoundingClientRect();
-          // Anchor at the top-right corner of the popup, half overlapping.
-          // Clamp to keep the button on-screen on small viewports.
-          const top = Math.max(rect.top - 20, 12);
-          const left = Math.min(rect.right - 20, window.innerWidth - 52);
-          btn.style.top = top + 'px';
-          btn.style.left = left + 'px';
-        };
+          const reposition = () => {
+            if (!btn.isConnected || !popup.isConnected) return;
+            const rect = popup.getBoundingClientRect();
+            // Anchor at the top-right corner of the popup, half overlapping.
+            // Clamp to keep the button on-screen on small viewports.
+            const top = Math.max(rect.top - 20, 12);
+            const left = Math.min(rect.right - 20, window.innerWidth - 52);
+            btn.style.top = top + 'px';
+            btn.style.left = left + 'px';
+          };
 
-        btn.onmouseenter = () => { btn.style.transform = 'scale(1.1)'; };
-        btn.onmouseleave = () => { btn.style.transform = 'scale(1)'; };
-        btn.onclick = () => {
-          if (window.Calendly && window.Calendly.closePopupWidget) {
-            window.Calendly.closePopupWidget();
-          }
-          btn.remove();
-          window.removeEventListener('resize', reposition);
-        };
-
-        overlay.appendChild(btn);
-        reposition();
-        window.addEventListener('resize', reposition);
-
-        // Auto-cleanup: remove the button + listener when Calendly closes its overlay
-        const cleanupInterval = setInterval(() => {
-          if (!document.querySelector('.calendly-overlay')) {
-            const existingBtn = document.getElementById('wice-calendly-close');
-            if (existingBtn) existingBtn.remove();
+          btn.onmouseenter = () => { btn.style.transform = 'scale(1.1)'; };
+          btn.onmouseleave = () => { btn.style.transform = 'scale(1)'; };
+          btn.onclick = () => {
+            if (window.Calendly && window.Calendly.closePopupWidget) {
+              window.Calendly.closePopupWidget();
+            }
+            btn.remove();
             window.removeEventListener('resize', reposition);
-            clearInterval(cleanupInterval);
-          }
-        }, 500);
-      } else if (attempts > 50) {
-        // Give up after 5 seconds if the popup never mounted
-        clearInterval(waitForPopup);
-      }
-    }, 100);
+          };
+
+          overlay.appendChild(btn);
+          reposition();
+          // Fade in after positioning is set
+          requestAnimationFrame(() => {
+            btn.style.opacity = '1';
+          });
+          window.addEventListener('resize', reposition);
+
+          // Auto-cleanup: remove the button + listener when Calendly closes its overlay
+          const cleanupInterval = setInterval(() => {
+            if (!document.querySelector('.calendly-overlay')) {
+              const existingBtn = document.getElementById('wice-calendly-close');
+              if (existingBtn) existingBtn.remove();
+              window.removeEventListener('resize', reposition);
+              clearInterval(cleanupInterval);
+            }
+          }, 500);
+        } else if (attempts > 40) {
+          // Give up after 4 seconds if the popup never mounted
+          clearInterval(waitForPopup);
+        }
+      }, 100);
+    }, 900);
   };
 
   const activeProgram = BOOKING_PROGRAMS[activeIdx] || BOOKING_PROGRAMS[0];
