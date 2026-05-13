@@ -381,7 +381,7 @@ window.TRANSLATIONS = {
       duration: '30 min',
       capacity: 'Hasta 5 personas',
       viewSlots: 'Ver horarios disponibles',
-      selected: 'Cargando horarios...',
+      selected: 'Horarios cargados',
       notReady: 'Estamos terminando de configurar los horarios para este programa. Vuelve a intentarlo pronto o escríbenos por WhatsApp.',
       loading: 'Cargando calendario...',
       programs: {
@@ -934,7 +934,7 @@ window.TRANSLATIONS = {
       duration: '30 min',
       capacity: 'Up to 5 people',
       viewSlots: 'See available times',
-      selected: 'Loading times...',
+      selected: 'Times loaded',
       notReady: 'We are still setting up the schedule for this program. Try again soon or reach out on WhatsApp.',
       loading: 'Loading calendar...',
       programs: {
