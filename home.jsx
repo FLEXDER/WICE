@@ -242,7 +242,7 @@ const Visa = ({ openApply, embedded = false }) => {
   );
 };
 
-const Process = ({ embedded = false }) => {
+const Process = ({ embedded = false, navigate }) => {
   const { t } = useLang();
   const steps = (t.process && t.process.steps) || [];
   return (
@@ -260,6 +260,20 @@ const Process = ({ embedded = false }) => {
               <p style={{ marginTop: 8, color: 'var(--ink-soft)', fontSize: 14 }}>{s.d}</p>
             </div>
           ))}
+        </div>
+
+        {/* CTA — go to /agendar page */}
+        <div style={{ marginTop: 56, padding: '40px 32px', background: 'var(--sky-soft)', borderRadius: 'var(--radius-lg)', textAlign: 'center' }}>
+          <h3 style={{ fontSize: 26, color: 'var(--blue)' }}>{t.process.ctaTitle}</h3>
+          <p style={{ marginTop: 10, fontSize: 16, color: 'var(--ink-soft)', maxWidth: 540, margin: '10px auto 0' }}>{t.process.ctaDesc}</p>
+          <button
+            type="button"
+            onClick={() => navigate && navigate('booking')}
+            className="btn btn-primary btn-lg"
+            style={{ marginTop: 24, justifyContent: 'center' }}
+          >
+            {t.process.ctaButton} <Icon name="arrow" size={16} />
+          </button>
         </div>
       </div>
     </section>
@@ -386,7 +400,7 @@ const FAQ = ({ embedded = false }) => {
   );
 };
 
-const Contact = ({ openApply, embedded = false }) => {
+const Contact = ({ openApply, navigate, embedded = false }) => {
   const { t } = useLang();
   const icons = ['location', 'phone', 'mail'];
   return (
@@ -403,6 +417,7 @@ const Contact = ({ openApply, embedded = false }) => {
           </p>
           <div style={{ display: 'flex', gap: 12, marginTop: 28, flexWrap: 'wrap' }}>
             <button className="btn btn-primary btn-lg" onClick={() => openApply()}>{t.common.apply}</button>
+            <button type="button" className="btn btn-white btn-lg" onClick={() => navigate && navigate('booking')}>{t.contact.scheduleCall}</button>
             <a href={waUrl('523322130778')} target="_blank" rel="noopener" className="btn btn-white btn-lg">{t.common.talkToAdvisor}</a>
           </div>
         </div>
@@ -669,6 +684,112 @@ const Home = ({ navigate, openApply }) => (
   </main>
 );
 
+// ============================================================
+// Booking — schedule a free informational call
+// ============================================================
+const BOOKING_PROGRAMS = [
+  { id: 'swt', name: 'Summer Work & Travel', color: 'var(--yellow)', textColor: 'var(--ink)', icon: 'sun' },
+  { id: 'camp', name: 'Camp Exchange', color: 'var(--green)', textColor: 'white', icon: 'tent' },
+  { id: 'intern', name: 'Internship & Trainee', color: 'var(--blue)', textColor: 'white', icon: 'briefcase' },
+  { id: 'support', name: 'Support Staff', color: 'var(--orange-soft)', textColor: 'white', icon: 'chef' },
+];
+
+const Booking = () => {
+  const { t } = useLang();
+  const [selectedProgram, setSelectedProgram] = React.useState(null);
+  const [calendlyReady, setCalendlyReady] = React.useState(false);
+
+  // When user picks a program, mount the Calendly inline widget in the embed container
+  React.useEffect(() => {
+    if (!selectedProgram) return;
+    const target = document.getElementById('calendly-inline-target');
+    if (!target) return;
+    target.innerHTML = '';
+    const url = window.getCalendlyUrl && window.getCalendlyUrl(selectedProgram);
+    if (url && window.Calendly && window.Calendly.initInlineWidget) {
+      window.Calendly.initInlineWidget({ url: url, parentElement: target, prefill: {}, utm: {} });
+      setCalendlyReady(true);
+    } else {
+      // Placeholder while the URL is not configured or the widget script hasn't loaded yet
+      target.innerHTML = '<div style="padding:60px 24px;text-align:center;color:var(--ink-soft);font-size:15px;line-height:1.6;">' + (url ? t.booking.loading : t.booking.notReady) + '</div>';
+      setCalendlyReady(false);
+    }
+    // Smooth scroll so the user sees the calendar
+    setTimeout(function () {
+      try { target.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch (e) { /* no-op */ }
+    }, 120);
+  }, [selectedProgram]);
+
+  return (
+    <section style={{ paddingTop: 'calc(var(--header-h) + 96px)', paddingBottom: 96 }}>
+      <div className="container">
+        <div className="section-head" style={{ textAlign: 'center' }}>
+          <span className="eyebrow">{t.booking.eyebrow}</span>
+          <h2>{t.booking.title1} <span className="text-blue">{t.booking.title2}</span></h2>
+          <p className="lead" style={{ margin: '16px auto 0', maxWidth: 620 }}>{t.booking.desc}</p>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 20, marginTop: 48 }} className="booking-grid">
+          {BOOKING_PROGRAMS.map((p) => {
+            const trp = (t.booking.programs && t.booking.programs[p.id]) || {};
+            const isSelected = selectedProgram === p.id;
+            return (
+              <button
+                key={p.id}
+                type="button"
+                onClick={() => setSelectedProgram(p.id)}
+                aria-pressed={isSelected}
+                style={{
+                  background: 'white',
+                  border: isSelected ? '2px solid var(--blue)' : '1px solid var(--line)',
+                  borderRadius: 'var(--radius)',
+                  padding: 24,
+                  textAlign: 'left',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  transition: 'all 0.2s ease',
+                  boxShadow: isSelected ? '0 8px 24px rgba(25, 96, 132, 0.15)' : 'var(--shadow)',
+                  transform: isSelected ? 'translateY(-2px)' : 'translateY(0)',
+                  fontFamily: 'inherit',
+                }}
+              >
+                <div style={{ width: 52, height: 52, borderRadius: 14, background: p.color, color: p.textColor, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 18 }}>
+                  <Icon name={p.icon} size={26} />
+                </div>
+                <h3 style={{ fontSize: 19, marginBottom: 8, lineHeight: 1.2 }}>{p.name}</h3>
+                <p style={{ fontSize: 14, color: 'var(--ink-soft)', marginBottom: 18, lineHeight: 1.55, flex: 1 }}>{trp.desc}</p>
+                <div style={{ display: 'flex', gap: 14, fontSize: 12, color: 'var(--ink-soft)', marginBottom: 16, alignItems: 'center', flexWrap: 'wrap' }}>
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><Icon name="clock" size={13} /> {t.booking.duration}</span>
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><Icon name="users" size={13} /> {t.booking.capacity}</span>
+                </div>
+                <div className="btn btn-blue" style={{ width: '100%', justifyContent: 'center', padding: '12px', fontSize: 13, marginTop: 'auto', pointerEvents: 'none' }}>
+                  {isSelected ? t.booking.selected : t.booking.viewSlots} <Icon name="arrow" size={14} />
+                </div>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Inline Calendly embed target. Stays empty until a program is selected. */}
+        <div
+          id="calendly-inline-target"
+          style={{
+            marginTop: selectedProgram ? 48 : 0,
+            minHeight: selectedProgram ? 720 : 0,
+            borderRadius: 'var(--radius)',
+            overflow: 'hidden',
+            background: selectedProgram ? 'var(--bg-soft)' : 'transparent',
+            transition: 'min-height 0.3s ease',
+          }}
+        />
+      </div>
+    </section>
+  );
+};
+
+const BookingPage = (props) => <main data-screen-label="Agendar"><Booking {...props} /></main>;
+
 // Standalone wrappers for tabs
 const ProgramsPage = (props) => <main data-screen-label="Programas"><Programs {...props} /></main>;
 const EmployersPage = (props) => <main data-screen-label="Empleadores"><Employers {...props} /></main>;
@@ -679,4 +800,4 @@ const TestimonialsPage = (props) => <main data-screen-label="Testimonios"><Testi
 const FAQPage = (props) => <main data-screen-label="FAQ"><FAQ {...props} /></main>;
 const ContactPage = (props) => <main data-screen-label="Contacto"><Contact {...props} /></main>;
 
-Object.assign(window, { Home, PROGRAMS, EMPLOYERS, ProgramsPage, EmployersPage, VisaPage, ProcessPage, TeamPage, TestimonialsPage, FAQPage, ContactPage });
+Object.assign(window, { Home, PROGRAMS, EMPLOYERS, ProgramsPage, EmployersPage, VisaPage, ProcessPage, BookingPage, TeamPage, TestimonialsPage, FAQPage, ContactPage });
