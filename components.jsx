@@ -271,7 +271,7 @@ const Footer = ({ navigate, openApply }) => {
               {t.footer.address}
             </p>
             <a href="tel:+523322130778" style={{ marginTop: 12 }}>+52 33 2213 0778</a>
-            <a href="mailto:contacto@wice.com.mx">contacto@wice.com.mx</a>
+            <a href="mailto:contacto@wice.org.mx">contacto@wice.org.mx</a>
           </div>
         </div>
         <div className="footer-bottom">
