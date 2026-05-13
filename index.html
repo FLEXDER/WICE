@@ -133,6 +133,15 @@
       /* Hero badge slightly smaller */
       .pill { font-size: 11px !important; padding: 6px 12px !important; }
 
+      /* Hide hero floating badges on mobile — they overflow and look messy when hero is stacked */
+      .hero-float-badge { display: none !important; }
+
+      /* Hero art: center, full width, sensible aspect ratio so the image actually shows */
+      .hero-art {
+        max-width: 100% !important;
+        margin: 24px 0 0 !important;
+      }
+
       /* Stats grid: 2 columns on mobile */
       .stats { grid-template-columns: repeat(2, 1fr) !important; gap: 20px !important; margin-top: 56px !important; }
 
