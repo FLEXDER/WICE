@@ -364,6 +364,8 @@ const TEAM = [
 const Team = ({ embedded = false }) => {
   const { t } = useLang();
   const members = (t.team && t.team.members) || [];
+  const scrollRef = React.useRef(null);
+  const { activeIdx, handleScroll, scrollToCard } = useCarouselTracker(scrollRef, TEAM.length);
   return (
   <section id="team" style={{ background: 'var(--bg-soft)', paddingTop: embedded ? 96 : 'calc(var(--header-h) + 96px)' }}>
     <div className="container">
@@ -371,7 +373,12 @@ const Team = ({ embedded = false }) => {
         <span className="eyebrow">{t.team.eyebrow}</span>
         <h2>{t.team.title1} <span className="text-blue">{t.team.title2}</span></h2>
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 20 }} className="team-grid">
+      <div
+        ref={scrollRef}
+        onScroll={handleScroll}
+        style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 20 }}
+        className="team-grid"
+      >
         {TEAM.map((m, i) => {
           const trm = members[i] || {};
           return (
@@ -388,6 +395,7 @@ const Team = ({ embedded = false }) => {
           );
         })}
       </div>
+      <CarouselDots count={TEAM.length} activeIdx={activeIdx} onDotClick={scrollToCard} activeColor="var(--orange)" ariaLabel={t.team.title1} />
     </div>
   </section>
   );
@@ -856,6 +864,8 @@ const Booking = () => {
   const { t } = useLang();
   const [selectedProgram, setSelectedProgram] = React.useState(null);
   const [calendlyReady, setCalendlyReady] = React.useState(false);
+  const scrollRef = React.useRef(null);
+  const { activeIdx, handleScroll, scrollToCard } = useCarouselTracker(scrollRef, BOOKING_PROGRAMS.length);
 
   // When user picks a program, mount the Calendly inline widget in the embed container
   React.useEffect(() => {
@@ -878,6 +888,10 @@ const Booking = () => {
     }, 120);
   }, [selectedProgram]);
 
+  // Active color for dots matches the currently-viewed card's program color
+  const activeProgram = BOOKING_PROGRAMS[activeIdx] || BOOKING_PROGRAMS[0];
+  const dotsColor = (selectedProgram && BOOKING_PROGRAMS.find(p => p.id === selectedProgram)?.color) || activeProgram.color;
+
   return (
     <section style={{ paddingTop: 'calc(var(--header-h) + 96px)', paddingBottom: 96 }}>
       <div className="container">
@@ -887,7 +901,12 @@ const Booking = () => {
           <p className="lead" style={{ textAlign: 'center', marginTop: 16, maxWidth: 620 }}>{t.booking.desc}</p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 20, marginTop: 48 }} className="booking-grid">
+        <div
+          ref={scrollRef}
+          onScroll={handleScroll}
+          style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 20, marginTop: 48 }}
+          className="booking-grid"
+        >
           {BOOKING_PROGRAMS.map((p) => {
             const trp = (t.booking.programs && t.booking.programs[p.id]) || {};
             const isSelected = selectedProgram === p.id;
@@ -928,6 +947,8 @@ const Booking = () => {
             );
           })}
         </div>
+
+        <CarouselDots count={BOOKING_PROGRAMS.length} activeIdx={activeIdx} onDotClick={scrollToCard} activeColor={dotsColor} ariaLabel={t.booking.title1} />
 
         {/* Inline Calendly embed target. Stays empty until a program is selected. */}
         <div
