@@ -16,22 +16,22 @@
   <meta name="apple-mobile-web-app-title" content="WICE MX" />
   <link rel="manifest" href="site.webmanifest" />
 
-  <!-- Calendly widget assets — popup scheduler -->
+  <!-- Calendly widget assets — popup scheduler + inline embed -->
   <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
   <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
   <script>
-    // Replace this URL with your actual Calendly event link after creating the account.
-    // Example: 'https://calendly.com/wice-mx/asesoria-wice'
-    window.CALENDLY_URL = 'CALENDLY_URL_PLACEHOLDER';
-    window.openCalendly = function () {
-      if (window.Calendly && window.CALENDLY_URL && window.CALENDLY_URL !== 'CALENDLY_URL_PLACEHOLDER') {
-        window.Calendly.initPopupWidget({ url: window.CALENDLY_URL });
-        return false;
-      }
-      // Fallback while the URL isn't configured yet: open WhatsApp so the user isn't stranded
-      console.warn('Calendly URL not configured. Set window.CALENDLY_URL in index.html.');
-      window.open('https://wa.me/523322130778', '_blank');
-      return false;
+    // Replace each PLACEHOLDER with the actual Calendly Group Event URL for that program.
+    // Example: 'https://calendly.com/wice-mx/swt-llamada-informativa'
+    window.CALENDLY_URLS = {
+      swt:     'CALENDLY_URL_SWT_PLACEHOLDER',
+      camp:    'CALENDLY_URL_CAMP_PLACEHOLDER',
+      intern:  'CALENDLY_URL_INTERN_PLACEHOLDER',
+      support: 'CALENDLY_URL_SUPPORT_PLACEHOLDER',
+    };
+    window.getCalendlyUrl = function (programId) {
+      var url = window.CALENDLY_URLS && window.CALENDLY_URLS[programId];
+      if (url && url.indexOf('PLACEHOLDER') === -1) return url;
+      return null;
     };
   </script>
   <style>
@@ -132,11 +132,12 @@
       else if (route === 'programs') page = <ProgramsPage navigate={navigate} openApply={openApply} />;
       else if (route === 'employers') page = <EmployersPage navigate={navigate} openApply={openApply} />;
       else if (route === 'visa') page = <VisaPage openApply={() => openApply()} />;
-      else if (route === 'process') page = <ProcessPage />;
+      else if (route === 'process') page = <ProcessPage navigate={navigate} />;
+      else if (route === 'booking') page = <BookingPage navigate={navigate} />;
       else if (route === 'team') page = <TeamPage />;
       else if (route === 'testimonials') page = <TestimonialsPage />;
       else if (route === 'faq') page = <FAQPage />;
-      else if (route === 'contact') page = <ContactPage openApply={() => openApply()} />;
+      else if (route === 'contact') page = <ContactPage openApply={() => openApply()} navigate={navigate} />;
       else if (route === 'terms') page = <Terms />;
       else if (route.startsWith('program-')) {
         const id = route.replace('program-', '');
