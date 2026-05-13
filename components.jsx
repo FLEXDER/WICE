@@ -300,14 +300,34 @@ const Fab = () => {
 // Hero Carousel — auto-rotating images with fade transition
 const HeroCarousel = ({ images = [], interval = 5000 }) => {
   const [active, setActive] = React.useState(0);
+  const [paused, setPaused] = React.useState(false);
+  const touchStartX = React.useRef(null);
   const { t } = useLang();
   React.useEffect(() => {
-    if (images.length <= 1) return;
+    if (images.length <= 1 || paused) return;
     const id = setInterval(() => {
       setActive((prev) => (prev + 1) % images.length);
     }, interval);
     return () => clearInterval(id);
-  }, [images.length, interval]);
+  }, [images.length, interval, paused]);
+
+  const onTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+    setPaused(true);
+  };
+  const onTouchEnd = (e) => {
+    if (touchStartX.current == null) return;
+    const endX = e.changedTouches[0].clientX;
+    const diff = touchStartX.current - endX;
+    const threshold = 40;
+    if (Math.abs(diff) > threshold) {
+      if (diff > 0) setActive((prev) => (prev + 1) % images.length);
+      else setActive((prev) => (prev - 1 + images.length) % images.length);
+    }
+    touchStartX.current = null;
+    // Resume autoplay after a moment
+    setTimeout(() => setPaused(false), 4000);
+  };
 
   if (!images.length) {
     return (
@@ -316,7 +336,11 @@ const HeroCarousel = ({ images = [], interval = 5000 }) => {
   }
 
   return (
-    <div style={{ position: 'absolute', inset: 0, overflow: 'hidden' }}>
+    <div
+      style={{ position: 'absolute', inset: 0, overflow: 'hidden', touchAction: 'pan-y' }}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+    >
       {images.map((src, i) => (
         <img
           key={src}
@@ -330,18 +354,19 @@ const HeroCarousel = ({ images = [], interval = 5000 }) => {
             objectFit: 'cover',
             opacity: active === i ? 1 : 0,
             transition: 'opacity 1.2s ease-in-out',
+            pointerEvents: 'none',
           }}
         />
       ))}
       {/* Subtle dark overlay for badge contrast */}
-      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.18) 100%)' }} />
+      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.18) 100%)', pointerEvents: 'none' }} />
       {/* Dots indicator */}
       {images.length > 1 && (
         <div style={{ position: 'absolute', bottom: 16, left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: 8, zIndex: 3 }}>
           {images.map((_, i) => (
             <button
               key={i}
-              onClick={() => setActive(i)}
+              onClick={() => { setActive(i); setPaused(true); setTimeout(() => setPaused(false), 4000); }}
               aria-label={`${t.common.ariaSlide} ${i + 1}`}
               style={{
                 width: active === i ? 24 : 8,
