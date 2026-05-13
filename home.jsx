@@ -887,60 +887,67 @@ const Booking = () => {
     }
     window.Calendly.initPopupWidget({ url: url });
 
-    // Inject a custom close button so the user can always dismiss the popup
-    // (Calendly's built-in close icon is sometimes hidden or hard to see).
-    setTimeout(() => {
-      if (document.getElementById('wice-calendly-close')) return;
-      const btn = document.createElement('button');
-      btn.id = 'wice-calendly-close';
-      btn.setAttribute('aria-label', 'Cerrar');
-      btn.innerHTML = '&times;';
-      Object.assign(btn.style, {
-        position: 'fixed',
-        top: '20px',
-        right: '20px',
-        width: '44px',
-        height: '44px',
-        borderRadius: '50%',
-        background: 'rgba(10, 17, 38, 0.85)',
-        color: 'white',
-        border: 'none',
-        fontSize: '28px',
-        fontWeight: '300',
-        lineHeight: '1',
-        cursor: 'pointer',
-        zIndex: '100000',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '0 0 4px 0',
-        boxShadow: '0 4px 14px rgba(0, 0, 0, 0.35)',
-        transition: 'transform 0.15s ease, background 0.15s ease',
-      });
-      btn.onmouseenter = () => {
-        btn.style.transform = 'scale(1.08)';
-        btn.style.background = 'rgba(10, 17, 38, 1)';
-      };
-      btn.onmouseleave = () => {
-        btn.style.transform = 'scale(1)';
-        btn.style.background = 'rgba(10, 17, 38, 0.85)';
-      };
-      btn.onclick = () => {
-        if (window.Calendly && window.Calendly.closePopupWidget) {
-          window.Calendly.closePopupWidget();
+    // Actively wait for Calendly's overlay to mount, then inject a clearly visible
+    // close button. Appending inside the overlay ensures it sits above the iframe
+    // and isn't covered by the site header or any other UI layer.
+    let attempts = 0;
+    const waitForOverlay = setInterval(() => {
+      attempts += 1;
+      const overlay = document.querySelector('.calendly-overlay');
+      if (overlay) {
+        clearInterval(waitForOverlay);
+        if (!document.getElementById('wice-calendly-close')) {
+          const btn = document.createElement('button');
+          btn.id = 'wice-calendly-close';
+          btn.setAttribute('aria-label', 'Cerrar');
+          btn.innerHTML = '&times;';
+          Object.assign(btn.style, {
+            position: 'fixed',
+            top: '20px',
+            right: '20px',
+            width: '48px',
+            height: '48px',
+            borderRadius: '50%',
+            background: '#0a1126',
+            color: 'white',
+            border: '2px solid white',
+            fontSize: '28px',
+            fontWeight: '400',
+            lineHeight: '1',
+            cursor: 'pointer',
+            zIndex: '2147483647',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '0 0 4px 0',
+            boxShadow: '0 4px 16px rgba(0, 0, 0, 0.5)',
+            transition: 'transform 0.15s ease',
+          });
+          btn.onmouseenter = () => { btn.style.transform = 'scale(1.1)'; };
+          btn.onmouseleave = () => { btn.style.transform = 'scale(1)'; };
+          btn.onclick = () => {
+            if (window.Calendly && window.Calendly.closePopupWidget) {
+              window.Calendly.closePopupWidget();
+            }
+            btn.remove();
+          };
+          overlay.appendChild(btn);
         }
-        btn.remove();
-      };
-      document.body.appendChild(btn);
 
-      // Auto-remove the button if Calendly closes itself (after reservation or click outside)
-      const checkInterval = setInterval(() => {
-        if (!document.querySelector('.calendly-overlay')) {
-          btn.remove();
-          clearInterval(checkInterval);
-        }
-      }, 500);
-    }, 600);
+        // Auto-cleanup: remove the button when Calendly closes its overlay
+        // (e.g., after a successful reservation or user clicks outside).
+        const cleanupInterval = setInterval(() => {
+          if (!document.querySelector('.calendly-overlay')) {
+            const existingBtn = document.getElementById('wice-calendly-close');
+            if (existingBtn) existingBtn.remove();
+            clearInterval(cleanupInterval);
+          }
+        }, 500);
+      } else if (attempts > 30) {
+        // Give up after 3 seconds if the overlay never mounted
+        clearInterval(waitForOverlay);
+      }
+    }, 100);
   };
 
   const activeProgram = BOOKING_PROGRAMS[activeIdx] || BOOKING_PROGRAMS[0];
