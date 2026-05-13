@@ -193,8 +193,8 @@ const Header = ({ route, navigate, openApply }) => {
   return (
     <header className="header">
       <div className="container header-inner">
-        <a className="logo" onClick={() => navigate('home')} style={{ cursor: 'pointer' }}>
-          <Logo variant="color" height={110} />
+        <a className="logo" onClick={() => navigate('home')} style={{ cursor: 'pointer', flexShrink: 0 }}>
+          <Logo variant="color" height={92} />
         </a>
         <nav className="nav">
           {links.map(l => (
