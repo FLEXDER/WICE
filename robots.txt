@@ -1,0 +1,35 @@
+# WICE México · robots.txt
+# https://wice.org.mx/
+
+User-agent: *
+Allow: /
+
+# Specific bots — explicit allow (good practice)
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: WhatsApp
+Allow: /
+
+# Block obvious AI scrapers that don't add value (opcional, comentado por default)
+# User-agent: GPTBot
+# Disallow: /
+# User-agent: ClaudeBot
+# Disallow: /
+# User-agent: CCBot
+# Disallow: /
+
+# Sitemap
+Sitemap: https://wice.org.mx/sitemap.xml
