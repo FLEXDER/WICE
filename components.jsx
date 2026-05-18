@@ -202,7 +202,9 @@ const Header = ({ route, navigate, openApply }) => {
           ))}
         </nav>
         <div className="header-cta">
-          <LanguageToggle />
+          <div className="desktop-only">
+            <LanguageToggle />
+          </div>
           <a href={waUrl('523322130778')} target="_blank" rel="noopener noreferrer" className="btn btn-ghost desktop-only">{t.common.talkToAdvisor}</a>
           <button className="btn btn-primary" onClick={() => openApply()}>{t.common.apply} <Icon name="arrow" size={16} /></button>
           <button className="menu-btn" onClick={() => setOpen(!open)} aria-label={t.nav.menu}>
@@ -216,6 +218,9 @@ const Header = ({ route, navigate, openApply }) => {
             {links.map(l => (
               <a key={l.id} onClick={() => go(l.id)} style={{ padding: '12px 14px', fontWeight: 600, color: 'var(--ink-soft)' }}>{l.label}</a>
             ))}
+            <div style={{ padding: '16px 14px 4px', marginTop: 8, borderTop: '1px solid var(--line)', display: 'flex', justifyContent: 'flex-start' }}>
+              <LanguageToggle />
+            </div>
           </div>
         </div>
       )}
