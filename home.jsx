@@ -199,8 +199,8 @@ const About = ({ embedded = false }) => {
 const PROGRAMS = [
   { id: 'swt', route: 'program-swt', name: 'Summer Work & Travel', cost: '$1,900 USD', color: 'var(--yellow)', textColor: 'var(--ink)', icon: 'sun', bgImage: 'assets/programs/program-swt.webp' },
   { id: 'camp', route: 'program-camp', name: 'Camp Exchange', cost: '$550 USD', color: 'var(--green)', textColor: 'white', icon: 'tent', bgImage: 'assets/programs/program-camp.webp' },
-  { id: 'intern', route: 'program-intern', name: 'Internship & Trainee', cost: '', color: 'var(--blue)', textColor: 'white', icon: 'briefcase', bgImage: 'assets/programs/program-intern.webp' },
   { id: 'support', route: 'program-support', name: 'Support Staff', cost: '$550 USD', color: 'var(--orange-soft)', textColor: 'white', icon: 'chef', bgImage: 'assets/programs/program-support.webp' },
+  { id: 'intern', route: 'program-intern', name: 'Internship & Trainee', cost: '', color: 'var(--blue)', textColor: 'white', icon: 'briefcase', bgImage: 'assets/programs/program-intern.webp' },
 ];
 
 const Programs = ({ navigate, openApply, embedded = false }) => {
@@ -856,8 +856,8 @@ const Home = ({ navigate, openApply }) => (
 const BOOKING_PROGRAMS = [
   { id: 'swt', name: 'Summer Work & Travel', color: 'var(--yellow)', textColor: 'var(--ink)', icon: 'sun' },
   { id: 'camp', name: 'Camp Exchange', color: 'var(--green)', textColor: 'white', icon: 'tent' },
-  { id: 'intern', name: 'Internship & Trainee', color: 'var(--blue)', textColor: 'white', icon: 'briefcase' },
   { id: 'support', name: 'Support Staff', color: 'var(--orange-soft)', textColor: 'white', icon: 'chef' },
+  { id: 'intern', name: 'Internship & Trainee', color: 'var(--blue)', textColor: 'white', icon: 'briefcase' },
 ];
 
 const Booking = () => {
